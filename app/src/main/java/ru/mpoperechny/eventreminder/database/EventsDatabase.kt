@@ -1,4 +1,4 @@
-package ru.mpoperechny.eventreminder.data
+package ru.mpoperechny.eventreminder.database
 
 import android.content.Context
 import androidx.annotation.NonNull

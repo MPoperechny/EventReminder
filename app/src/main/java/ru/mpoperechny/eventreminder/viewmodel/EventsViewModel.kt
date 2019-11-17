@@ -1,9 +1,9 @@
-package ru.mpoperechny.eventreminder.model
+package ru.mpoperechny.eventreminder.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import ru.mpoperechny.eventreminder.data.EventEntity
+import ru.mpoperechny.eventreminder.database.EventEntity
 
 import ru.mpoperechny.eventreminder.repository.EventsRepository
 

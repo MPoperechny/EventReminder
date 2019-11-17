@@ -1,4 +1,4 @@
-package ru.mpoperechny.eventreminder.data
+package ru.mpoperechny.eventreminder.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

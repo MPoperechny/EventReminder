@@ -3,9 +3,9 @@ package ru.mpoperechny.eventreminder.repository
 import android.app.Application
 import android.os.AsyncTask
 import androidx.lifecycle.LiveData
-import ru.mpoperechny.eventreminder.data.EventEntity
-import ru.mpoperechny.eventreminder.data.EventsDAO
-import ru.mpoperechny.eventreminder.data.EventsDatabase
+import ru.mpoperechny.eventreminder.database.EventEntity
+import ru.mpoperechny.eventreminder.database.EventsDAO
+import ru.mpoperechny.eventreminder.database.EventsDatabase
 
 class EventsRepository internal constructor(application: Application) {
 

@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.mpoperechny.eventreminder.R
 import ru.mpoperechny.eventreminder.adapters.RecyclerAdapter
-import ru.mpoperechny.eventreminder.data.EventEntity
+import ru.mpoperechny.eventreminder.database.EventEntity
 import ru.mpoperechny.eventreminder.databinding.ActivityNextEventBinding
-import ru.mpoperechny.eventreminder.model.EventsViewModel
+import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
 import java.util.ArrayList
 
 class NextEventActivity : AppCompatActivity() {
