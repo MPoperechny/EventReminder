@@ -1,5 +1,6 @@
 package ru.mpoperechny.eventreminder.database
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.annotation.NonNull
 import androidx.room.Database
@@ -15,30 +16,30 @@ import java.util.concurrent.Executors
     version = 1,
     exportSchema = false
 )
-/*, AnotherEntityType.class, AThirdEntityType.class */
+
 abstract class EventsDatabase : RoomDatabase() {
     abstract val eventsDao: EventsDAO
     private val context: Context? = null
 
     companion object {
 
-        private var eventsDatabase: EventsDatabase? = null
+        @SuppressLint("StaticFieldLeak")
+        @Volatile
+        private var INSTANCE: EventsDatabase? = null
 
-        fun getInstance(context: Context): EventsDatabase? {
-            if (eventsDatabase == null) {
-                synchronized(EventsDatabase::class) {
-                    if (eventsDatabase == null) {
-                        eventsDatabase = Room.databaseBuilder(
-                            context.applicationContext,
-                            EventsDatabase::class.java,
-                            "database"
-                        )
-                            .addCallback(sRoomDatabaseCallback)
-                            .build()
-                    }
-                }
+        fun getDatabase(context: Context): EventsDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    EventsDatabase::class.java,
+                    "events.db"
+                )
+                    .addCallback(sRoomDatabaseCallback)
+                    .build()
+                INSTANCE = instance
+                // return instance
+                instance
             }
-            return eventsDatabase
         }
 
 
@@ -47,7 +48,7 @@ abstract class EventsDatabase : RoomDatabase() {
                 super.onCreate(db)
                 Executors.newSingleThreadScheduledExecutor().execute {
                     //Log.d("rlf_app", "set default");
-                    eventsDatabase!!.eventsDao.insertEvents(*EventsDatabase.defaultData)
+                    INSTANCE!!.eventsDao.insertEvents(*EventsDatabase.defaultData)
                 }
             }
         }

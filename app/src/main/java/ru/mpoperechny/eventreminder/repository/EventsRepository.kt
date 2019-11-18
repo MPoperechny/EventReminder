@@ -9,25 +9,24 @@ import ru.mpoperechny.eventreminder.database.EventsDatabase
 
 class EventsRepository internal constructor(application: Application) {
 
-    private var eventsDAO: EventsDAO? = null
-    var allEvents: LiveData<List<EventEntity>>?
+    private var eventsDAO: EventsDAO = EventsDatabase.getDatabase(application).eventsDao
+    var allEvents: LiveData<List<EventEntity>>
 
     init {
-        eventsDAO = EventsDatabase.getInstance(application)?.eventsDao
-        allEvents = eventsDAO?.allEvents
+        allEvents = eventsDAO.allEvents
     }
 
 
     fun insertEvent(event: EventEntity) {
-        AsyncTask.execute { eventsDAO?.insertEvent(event) }
+        AsyncTask.execute { eventsDAO.insertEvent(event) }
     }
 
     fun insertEvents(vararg events: EventEntity) {
-        AsyncTask.execute { eventsDAO?.insertEvents(*events) }
+        AsyncTask.execute { eventsDAO.insertEvents(*events) }
     }
 
     fun deleteEvent(event: EventEntity) {
-        AsyncTask.execute { eventsDAO?.deleteEvents(event) }
+        AsyncTask.execute { eventsDAO.deleteEvents(event) }
     }
 
 }
