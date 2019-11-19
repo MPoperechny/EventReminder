@@ -28,6 +28,9 @@ interface EventsDAO {
     @Delete
     fun deleteEvents(vararg events: EventEntity)
 
+    @Query("DELETE FROM events")
+    fun deleteAll()
+
     @Query("SELECT * FROM events WHERE id = :id LIMIT 1")
     fun getEvent(id: Int): LiveData<EventEntity>
 

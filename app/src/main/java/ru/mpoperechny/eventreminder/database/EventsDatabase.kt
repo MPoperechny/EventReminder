@@ -48,7 +48,8 @@ abstract class EventsDatabase : RoomDatabase() {
                 super.onCreate(db)
                 Executors.newSingleThreadScheduledExecutor().execute {
                     //Log.d("rlf_app", "set default");
-                    INSTANCE!!.eventsDao.insertEvents(*EventsDatabase.defaultData)
+                    INSTANCE!!.eventsDao.deleteAll()
+                    //INSTANCE!!.eventsDao.insertEvents(*EventsDatabase.defaultData)
                 }
             }
         }

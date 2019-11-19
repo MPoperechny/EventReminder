@@ -11,7 +11,7 @@ class EventsViewModel(application: Application) : AndroidViewModel(application) 
 
     private val repository: EventsRepository
 
-    internal var allEvents: LiveData<List<EventEntity>>?
+    internal var allEvents: LiveData<List<EventEntity>>
 
     init {
         repository = EventsRepository(application)
@@ -28,5 +28,9 @@ class EventsViewModel(application: Application) : AndroidViewModel(application) 
 
     fun deleteEvent(event: EventEntity) {
         repository.deleteEvent(event)
+    }
+
+    fun deleteAll() {
+        repository.deleteAll()
     }
 }

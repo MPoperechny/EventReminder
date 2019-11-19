@@ -29,4 +29,8 @@ class EventsRepository internal constructor(application: Application) {
         AsyncTask.execute { eventsDAO.deleteEvents(event) }
     }
 
+    fun deleteAll() {
+        AsyncTask.execute { eventsDAO.deleteAll()}
+    }
+
 }
