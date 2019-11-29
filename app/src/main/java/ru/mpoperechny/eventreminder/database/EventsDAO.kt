@@ -8,10 +8,6 @@ import androidx.room.Query
 
 import androidx.room.OnConflictStrategy.REPLACE
 
-/**
- * Created by Maks on 20.07.2018.
- */
-
 @Dao
 interface EventsDAO {
 
