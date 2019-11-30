@@ -7,6 +7,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 import java.util.concurrent.Executors
 
@@ -19,11 +23,9 @@ import java.util.concurrent.Executors
 
 abstract class EventsDatabase : RoomDatabase() {
     abstract val eventsDao: EventsDAO
-    private val context: Context? = null
 
     companion object {
 
-        @SuppressLint("StaticFieldLeak")
         @Volatile
         private var INSTANCE: EventsDatabase? = null
 
@@ -34,7 +36,7 @@ abstract class EventsDatabase : RoomDatabase() {
                     EventsDatabase::class.java,
                     "events.db"
                 )
-                    .addCallback(sRoomDatabaseCallback)
+                    .addCallback(EventsDatabaseCallback(GlobalScope))
                     .build()
                 INSTANCE = instance
                 // return instance
@@ -42,14 +44,16 @@ abstract class EventsDatabase : RoomDatabase() {
             }
         }
 
-
-        private val sRoomDatabaseCallback = object : RoomDatabase.Callback() {
+        private class EventsDatabaseCallback(private val scope: CoroutineScope) :
+            RoomDatabase.Callback() {
             override fun onCreate(@NonNull db: SupportSQLiteDatabase) {
                 super.onCreate(db)
-                Executors.newSingleThreadScheduledExecutor().execute {
-                    //Log.d("rlf_app", "set default");
-                    INSTANCE!!.eventsDao.deleteAll()
-                    //INSTANCE!!.eventsDao.insertEvents(*EventsDatabase.defaultData)
+
+                INSTANCE?.let { database ->
+                    scope.launch(Dispatchers.IO) {
+                        database.eventsDao.deleteAll()
+                        database.eventsDao.insertEvents(*EventsDatabase.defaultData)
+                    }
                 }
             }
         }
@@ -57,7 +61,8 @@ abstract class EventsDatabase : RoomDatabase() {
         internal val defaultData: Array<EventEntity>
             get() = arrayOf(
                 EventEntity(1, EventEntity.BIRTHDAY, "WWWW", "wwww description"),
-                EventEntity(2, EventEntity.BIRTHDAY, "EEEE", "eeee description")
+                EventEntity(2, EventEntity.BIRTHDAY, "EEEE", "eeee description"),
+                EventEntity(3, EventEntity.BIRTHDAY, "sdsds", "sdsd description")
             )
     }
 }

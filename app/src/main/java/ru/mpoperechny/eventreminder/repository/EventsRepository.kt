@@ -17,20 +17,20 @@ class EventsRepository internal constructor(application: Application) {
     }
 
 
-    fun insertEvent(event: EventEntity) {
-        AsyncTask.execute { eventsDAO.insertEvent(event) }
+    suspend fun insertEvent(event: EventEntity) {
+        eventsDAO.insertEvent(event)
     }
 
-    fun insertEvents(vararg events: EventEntity) {
-        AsyncTask.execute { eventsDAO.insertEvents(*events) }
+    suspend fun insertEvents(vararg events: EventEntity) {
+        eventsDAO.insertEvents(*events)
     }
 
-    fun deleteEvent(event: EventEntity) {
-        AsyncTask.execute { eventsDAO.deleteEvents(event) }
+    suspend fun deleteEvent(event: EventEntity) {
+        eventsDAO.deleteEvents(event)
     }
 
-    fun deleteAll() {
-        AsyncTask.execute { eventsDAO.deleteAll()}
+    suspend fun deleteAll() {
+        eventsDAO.deleteAll()
     }
 
 }

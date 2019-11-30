@@ -16,16 +16,16 @@ interface EventsDAO {
     val allEvents: LiveData<List<EventEntity>>
 
     @Insert(onConflict = REPLACE)
-    fun insertEvent(event: EventEntity)
+    suspend fun insertEvent(event: EventEntity)
 
     @Insert(onConflict = REPLACE)
-    fun insertEvents(vararg events: EventEntity)
+    suspend fun insertEvents(vararg events: EventEntity)
 
     @Delete
-    fun deleteEvents(vararg events: EventEntity)
+    suspend fun deleteEvents(vararg events: EventEntity)
 
     @Query("DELETE FROM events")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Query("SELECT * FROM events WHERE id = :id LIMIT 1")
     fun getEvent(id: Int): LiveData<EventEntity>
