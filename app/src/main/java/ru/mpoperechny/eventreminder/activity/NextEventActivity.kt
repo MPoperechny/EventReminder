@@ -27,11 +27,9 @@ class NextEventActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.next_events_page_toolbar_title)
 
         eventsViewModel = ViewModelProviders.of(this).get(EventsViewModel::class.java)
-        eventsViewModel.allEvents.observe(this, object : Observer<List<EventEntity>> {
-            override fun onChanged(@Nullable eventEntities: List<EventEntity>?) {
-                if (eventEntities.isNullOrEmpty()) showEmptyData() else updateData(eventEntities)
-            }
-        })
+        eventsViewModel.allEvents.observe(this, Observer {
+                    eventEntities -> if (eventEntities.isNullOrEmpty()) showEmptyData() else updateData(eventEntities)
+            })
 
         //debug
         eventsViewModel.deleteAll()
