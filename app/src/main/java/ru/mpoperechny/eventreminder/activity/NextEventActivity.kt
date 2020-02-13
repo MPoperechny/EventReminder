@@ -3,10 +3,9 @@ package ru.mpoperechny.eventreminder.activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.annotation.Nullable
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.mpoperechny.eventreminder.R
 import ru.mpoperechny.eventreminder.adapters.RecyclerAdapter
@@ -17,7 +16,7 @@ import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
 class NextEventActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNextEventBinding
-    private lateinit var eventsViewModel: EventsViewModel
+    private val eventsViewModel: EventsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,10 +25,9 @@ class NextEventActivity : AppCompatActivity() {
 
         supportActionBar?.title = getString(R.string.next_events_page_toolbar_title)
 
-        eventsViewModel = ViewModelProviders.of(this).get(EventsViewModel::class.java)
-        eventsViewModel.allEvents.observe(this, Observer {
-                    eventEntities -> if (eventEntities.isNullOrEmpty()) showEmptyData() else updateData(eventEntities)
-            })
+        eventsViewModel.allEvents.observe(this){ eventEntities ->
+            if (eventEntities.isNullOrEmpty()) showEmptyData() else updateData(eventEntities)
+        }
 
         //debug
         eventsViewModel.deleteAll()
@@ -41,7 +39,7 @@ class NextEventActivity : AppCompatActivity() {
         )
 
 
-        binding.btAllEvents.setOnClickListener(View.OnClickListener {
+        binding.btAllEvents.setOnClickListener {
             //val intent = Intent(this@NextEventActivity, AllEventsActivity::class.java)
             //startActivity(intent)
 
@@ -49,20 +47,16 @@ class NextEventActivity : AppCompatActivity() {
                 eventsViewModel.deleteEvent(eventsViewModel.allEvents.value!![0]);
             }
 
-        })
-
+        }
     }
 
     private fun showEmptyData() {
-        Log.d("rlf_app", "showEmptyData")
         binding.nextEventCard.visibility = View.GONE
         binding.nextText.text = getString(R.string.no_data_text)
         updateList(emptyList())
     }
 
     private fun updateData(eventEntities: List<EventEntity>) {
-        Log.d("rlf_app", "updateData")
-
         binding.nextText.text = getString(R.string.next_events_title)
 
         updateCard(eventEntities[0])
