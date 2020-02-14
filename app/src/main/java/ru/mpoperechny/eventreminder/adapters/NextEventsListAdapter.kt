@@ -12,8 +12,8 @@ import java.util.ArrayList
 import ru.mpoperechny.eventreminder.R
 
 
-class RecyclerAdapter(private val mDataset: ArrayList<String?>) :
-    RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+class NextEventsListAdapter(private val mDataset: ArrayList<String?>) :
+    RecyclerView.Adapter<NextEventsListAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return mDataset.size
@@ -27,9 +27,9 @@ class RecyclerAdapter(private val mDataset: ArrayList<String?>) :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NextEventsListAdapter.ViewHolder {
         val v = LayoutInflater.from(parent.context)
-            .inflate(R.layout.recycler_item, parent, false)
+            .inflate(R.layout.next_events_list_item, parent, false)
 
         return ViewHolder(v)
     }

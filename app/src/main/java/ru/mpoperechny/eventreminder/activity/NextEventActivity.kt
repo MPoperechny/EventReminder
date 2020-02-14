@@ -7,9 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.mpoperechny.eventreminder.R
-import ru.mpoperechny.eventreminder.adapters.RecyclerAdapter
+import ru.mpoperechny.eventreminder.adapters.CardEventsListAdapter
+import ru.mpoperechny.eventreminder.adapters.NextEventsListAdapter
 import ru.mpoperechny.eventreminder.database.EventEntity
 import ru.mpoperechny.eventreminder.databinding.ActivityNextEventBinding
+import ru.mpoperechny.eventreminder.utilites.daysLeftString
 import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
 import java.util.*
 import kotlin.collections.ArrayList
@@ -39,41 +41,46 @@ class NextEventActivity : AppCompatActivity() {
         //todo предусмотреть смену смену часового пояса в устройстве
         eventsViewModel.insertEvents(
             EventEntity(
-                GregorianCalendar(2017, Calendar.FEBRUARY, 18).timeInMillis,
+                GregorianCalendar(1965, Calendar.FEBRUARY, 18).timeInMillis,
                 EventEntity.BIRTHDAY,
-                "234",
-                "234 description"
+                "Иванов Иван Иванович",
+                "описание1"
             ),
             EventEntity(
-                GregorianCalendar(2017, Calendar.FEBRUARY, 18).timeInMillis,
+                GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
                 EventEntity.BIRTHDAY,
-                "234_2",
-                "234_2 description"
-            ),
-            EventEntity(
-                GregorianCalendar(2017, Calendar.FEBRUARY, 25).timeInMillis,
-                EventEntity.BIRTHDAY,
-                "567",
-                "989_1"
-            ),
-            EventEntity(
-                GregorianCalendar(2017, Calendar.FEBRUARY, 25).timeInMillis,
-                EventEntity.BIRTHDAY,
-                "567",
-                "989_2"
-            ),
-            EventEntity(
-                GregorianCalendar(2017, Calendar.FEBRUARY, 25).timeInMillis,
-                EventEntity.BIRTHDAY,
-                "567",
-                "989_3"
-            ),
-            EventEntity(
-                GregorianCalendar(2017, Calendar.MARCH, 1).timeInMillis,
-                EventEntity.BIRTHDAY,
-                "567111",
-                "5678 description"
+                "Петров Петр Петрович",
+                "описание2"
             )
+            ,
+            EventEntity(
+                GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
+                EventEntity.BIRTHDAY,
+                "Петров Петр Петрович",
+                "описание2"
+            )
+            ,
+            EventEntity(
+                GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
+                EventEntity.BIRTHDAY,
+                "Петров Петр Петрович",
+                "описание2"
+            )
+            ,
+            EventEntity(
+                GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
+                EventEntity.BIRTHDAY,
+                "Петров Петр Петрович",
+                "описание2"
+            )
+            ,
+            EventEntity(
+                GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
+                EventEntity.BIRTHDAY,
+                "Петров Петр Петрович",
+                "описание2"
+            )
+
         )
 
 
@@ -115,34 +122,26 @@ class NextEventActivity : AppCompatActivity() {
 
         binding.nextEventCard.visibility = View.VISIBLE
         binding.eventDate.text = dateFormat.format(nearestEventEntities[0].date)
-        binding.eventDaysLeft.text = getDaysLeftString(nearestEventEntities[0].daysLeft)
+        binding.eventDaysLeft.text = daysLeftString(this, nearestEventEntities[0].daysLeft)
 
         val mDataSet = ArrayList(
             nearestEventEntities.map {
-                it.description + " " + dateFormat.format(it.date) + " " + ". осталось: " + it.daysLeft
+                listOf(it.person, eventTypeString(it.type))
             }
         )
         val mLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.nextEventsRecyclerView.layoutManager = mLayoutManager
-        val mAdapter = RecyclerAdapter(mDataSet)
+        val mAdapter = CardEventsListAdapter(mDataSet)
         binding.nextEventsRecyclerView.adapter = mAdapter
     }
 
-    //todo вынести отдельно
-    private fun getDaysLeftString(days: Int): String {
-        return when {
-            days == 0 -> getString(R.string.today)
-            days == 1 -> getString(R.string.tomorrow)
-            days == 2 -> getString(R.string.two_days)
-            days in 12..14 -> getString(R.string.after) + " " + days.toString() + " " + getString(R.string.days_1)
-            days.toString().endsWith("2")
-                    || days.toString().endsWith("3")
-                    || days.toString().endsWith("4")
-            -> getString(R.string.after) + " " + days.toString() + " " + getString(R.string.days_2)
-            else -> getString(R.string.after) + " " + days.toString() + " " + getString(R.string.days_1)
+    private fun eventTypeString(eventType: Int): String {
+        return when (eventType){
+            EventEntity.BIRTHDAY -> getString(R.string.birthday)
+            EventEntity.HOLIDAY -> getString(R.string.holiday)
+            else -> getString(R.string.other_event)
         }
     }
-
 
     private fun updateList(eventEntities: List<EventEntity>) {
 
@@ -150,12 +149,12 @@ class NextEventActivity : AppCompatActivity() {
 
         val mDataSet = ArrayList(
             eventEntities.map {
-                it.description + " " + dateFormat.format(it.date) + " " + ". осталось: " + it.daysLeft
+                it.person + "\n" + dateFormat.format(it.date)
             }
         )
         val mLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.otherEventsRecyclerView.layoutManager = mLayoutManager
-        val mAdapter = RecyclerAdapter(mDataSet)
+        val mAdapter = NextEventsListAdapter(mDataSet)
         binding.otherEventsRecyclerView.adapter = mAdapter
     }
 

@@ -30,8 +30,8 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/calendar_icon_144" />
 
                 <LinearLayout
@@ -63,8 +63,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/upTable"
                 android:layout_gravity="center_horizontal|top"
-                android:layout_marginTop="@dimen/margin_main"
-                android:layout_marginBottom="@dimen/margin_main" />
+                android:layout_marginTop="@dimen/margin_mid"
+                android:layout_marginBottom="@dimen/margin_mid" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
