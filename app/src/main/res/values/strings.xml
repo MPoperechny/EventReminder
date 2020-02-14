@@ -7,5 +7,11 @@
     <string name="next_events_title">Последующие</string>
     <string name="view_all_button_text">Смотреть все</string>
     <string name="no_data_text">Нет событий</string>
+    <string name="today">Сегодня!</string>
+    <string name="tomorrow">Завтра</string>
+    <string name="two_days">Послезавтра</string>
+    <string name="days_1">Дней</string>
+    <string name="days_2">Дня</string>
+    <string name="after">Через</string>
 
 </resources>
