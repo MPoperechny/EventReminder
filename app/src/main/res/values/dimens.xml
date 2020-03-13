@@ -6,5 +6,6 @@
 
     <dimen name="margin_main">24dp</dimen>
     <dimen name="margin_mid">12dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
 
 </resources>

@@ -30,9 +30,9 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/calendar_icon_144" />
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/calendar_icon" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -45,15 +45,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="name"
-                        android:textSize="20sp" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/eventDaysLeft"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:textStyle="bold"/>
                 </LinearLayout>
             </RelativeLayout>
 
@@ -63,8 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/upTable"
                 android:layout_gravity="center_horizontal|top"
-                android:layout_marginTop="@dimen/margin_mid"
-                android:layout_marginBottom="@dimen/margin_mid" />
+                android:layout_marginTop="@dimen/margin_mid" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
@@ -72,7 +71,7 @@
         android:id="@+id/nextText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_main"
+        android:layout_marginTop="@dimen/margin_small"
         android:gravity="center_vertical|center_horizontal|top"
         android:text="@string/next_events_title"
         android:textSize="20sp"
@@ -85,8 +84,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="@dimen/margin_main"
-        android:layout_marginBottom="@dimen/margin_main"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_small"
         app:layout_constraintBottom_toTopOf="@+id/btAllEvents"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -98,8 +97,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/margin_main"
-        android:layout_marginBottom="@dimen/margin_main"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_small"
         android:paddingStart="@dimen/list_item_margin_left"
         android:paddingEnd="@dimen/list_item_margin_right"
         android:text="@string/view_all_button_text"

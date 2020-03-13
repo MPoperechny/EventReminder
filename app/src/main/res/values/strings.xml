@@ -4,7 +4,7 @@
     <string name="next_events_page_toolbar_title">События</string>
     <string name="all_events_page_toolbar_title">Все события</string>
 
-    <string name="next_events_title">Последующие</string>
+    <string name="next_events_title">Последующие:</string>
     <string name="view_all_button_text">Смотреть все</string>
     <string name="no_data_text">Нет событий</string>
     <string name="today">Сегодня!</string>

@@ -47,6 +47,18 @@ class NextEventActivity : AppCompatActivity() {
                 "описание1"
             ),
             EventEntity(
+                GregorianCalendar(1965, Calendar.FEBRUARY, 18).timeInMillis,
+                EventEntity.BIRTHDAY,
+                "Иванов Иван Иванович",
+                "описание1"
+            ),
+            EventEntity(
+                GregorianCalendar(1965, Calendar.FEBRUARY, 18).timeInMillis,
+                EventEntity.BIRTHDAY,
+                "Иванов Иван Иванович",
+                "описание1"
+            ),
+            EventEntity(
                 GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
                 EventEntity.BIRTHDAY,
                 "Петров Петр Петрович",
@@ -112,8 +124,13 @@ class NextEventActivity : AppCompatActivity() {
         val groupedEventEntities =
             sortedEventEntities.groupBy { it.daysLeft == sortedEventEntities[0].daysLeft }
 
-        if (groupedEventEntities.containsKey(true)) updateCard(groupedEventEntities.getValue(true))
-        if (groupedEventEntities.containsKey(false)) updateList(groupedEventEntities.getValue(false))
+        val cardList =
+            if (groupedEventEntities.containsKey(true)) groupedEventEntities.getValue(true) else emptyList()
+        updateCard(cardList)
+
+        val nextList =
+            if (groupedEventEntities.containsKey(false)) groupedEventEntities.getValue(false) else emptyList()
+        updateList(nextList)
     }
 
     private fun updateCard(nearestEventEntities: List<EventEntity>) {
@@ -136,7 +153,7 @@ class NextEventActivity : AppCompatActivity() {
     }
 
     private fun eventTypeString(eventType: Int): String {
-        return when (eventType){
+        return when (eventType) {
             EventEntity.BIRTHDAY -> getString(R.string.birthday)
             EventEntity.HOLIDAY -> getString(R.string.holiday)
             else -> getString(R.string.other_event)
