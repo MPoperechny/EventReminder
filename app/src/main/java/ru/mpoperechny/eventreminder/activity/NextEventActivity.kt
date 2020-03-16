@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.mpoperechny.eventreminder.R
@@ -26,8 +27,8 @@ class NextEventActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityNextEventBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_next_event)
 
         supportActionBar?.title = getString(R.string.next_events_page_toolbar_title)
 
