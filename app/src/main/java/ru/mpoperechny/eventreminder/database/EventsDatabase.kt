@@ -11,6 +11,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
 
 import java.util.concurrent.Executors
 
@@ -60,9 +61,60 @@ abstract class EventsDatabase : RoomDatabase() {
 
         internal val defaultData: Array<EventEntity>
             get() = arrayOf(
-                EventEntity(1, EventEntity.BIRTHDAY, "WWWW", "wwww description"),
-                EventEntity(2, EventEntity.BIRTHDAY, "EEEE", "eeee description"),
-                EventEntity(3, EventEntity.BIRTHDAY, "sdsds", "sdsd description")
+
+                EventEntity(
+                    GregorianCalendar(1965, Calendar.FEBRUARY, 18).timeInMillis,
+                    EventEntity.BIRTHDAY,
+                    "Иванов Иван Иванович",
+                    "описание1"
+                ),
+                EventEntity(
+                    GregorianCalendar(1965, Calendar.FEBRUARY, 18).timeInMillis,
+                    EventEntity.BIRTHDAY,
+                    "Иванов Иван Иванович",
+                    "описание1"
+                ),
+                EventEntity(
+                    GregorianCalendar(1965, Calendar.FEBRUARY, 18).timeInMillis,
+                    EventEntity.BIRTHDAY,
+                    "Иванов Иван Иванович",
+                    "описание1"
+                ),
+                EventEntity(
+                    GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
+                    EventEntity.BIRTHDAY,
+                    "Петров Петр Петрович",
+                    "описание2"
+                )
+                ,
+                EventEntity(
+                    GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
+                    EventEntity.BIRTHDAY,
+                    "Петров Петр Петрович",
+                    "описание2"
+                )
+                ,
+                EventEntity(
+                    GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
+                    EventEntity.BIRTHDAY,
+                    "Петров Петр Петрович",
+                    "описание2"
+                )
+                ,
+                EventEntity(
+                    GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
+                    EventEntity.BIRTHDAY,
+                    "Петров Петр Петрович",
+                    "описание2"
+                )
+                ,
+                EventEntity(
+                    GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
+                    EventEntity.BIRTHDAY,
+                    "Петров Петр Петрович",
+                    "описание2"
+                )
+
             )
     }
 }

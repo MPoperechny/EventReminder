@@ -1,5 +1,6 @@
 package ru.mpoperechny.eventreminder.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -34,76 +35,18 @@ class NextEventActivity : AppCompatActivity() {
             if (eventEntities.isNullOrEmpty()) showEmptyData() else updateData(eventEntities)
         }
 
-        //debug
-
-        eventsViewModel.deleteAll()
 
         //todo предусмотреть смену смену часового пояса в устройстве
-        eventsViewModel.insertEvents(
-            EventEntity(
-                GregorianCalendar(1965, Calendar.FEBRUARY, 18).timeInMillis,
-                EventEntity.BIRTHDAY,
-                "Иванов Иван Иванович",
-                "описание1"
-            ),
-            EventEntity(
-                GregorianCalendar(1965, Calendar.FEBRUARY, 18).timeInMillis,
-                EventEntity.BIRTHDAY,
-                "Иванов Иван Иванович",
-                "описание1"
-            ),
-            EventEntity(
-                GregorianCalendar(1965, Calendar.FEBRUARY, 18).timeInMillis,
-                EventEntity.BIRTHDAY,
-                "Иванов Иван Иванович",
-                "описание1"
-            ),
-            EventEntity(
-                GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
-                EventEntity.BIRTHDAY,
-                "Петров Петр Петрович",
-                "описание2"
-            )
-            ,
-            EventEntity(
-                GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
-                EventEntity.BIRTHDAY,
-                "Петров Петр Петрович",
-                "описание2"
-            )
-            ,
-            EventEntity(
-                GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
-                EventEntity.BIRTHDAY,
-                "Петров Петр Петрович",
-                "описание2"
-            )
-            ,
-            EventEntity(
-                GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
-                EventEntity.BIRTHDAY,
-                "Петров Петр Петрович",
-                "описание2"
-            )
-            ,
-            EventEntity(
-                GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
-                EventEntity.BIRTHDAY,
-                "Петров Петр Петрович",
-                "описание2"
-            )
-
-        )
-
-
 
         binding.btAllEvents.setOnClickListener {
             //val intent = Intent(this@NextEventActivity, AllEventsActivity::class.java)
             //startActivity(intent)
 
+            /*
             if (!eventsViewModel.allEvents.value.isNullOrEmpty()) {
                 eventsViewModel.deleteEvent(eventsViewModel.allEvents.value!![0]);
             }
+            */
 
         }
     }
