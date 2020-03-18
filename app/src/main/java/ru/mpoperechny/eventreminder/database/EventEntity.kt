@@ -25,6 +25,7 @@ data class EventEntity(
     companion object {
         var BIRTHDAY = 0
         var HOLIDAY = 1
+        var OTHER = 2
     }
 
     private fun daysLeft(timeInMilliseconds: Long): Int {

@@ -1,13 +1,11 @@
 package ru.mpoperechny.eventreminder.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import ru.mpoperechny.eventreminder.R
+import ru.mpoperechny.eventreminder.TextEventDescription
 import ru.mpoperechny.eventreminder.database.EventEntity
-
+import ru.mpoperechny.eventreminder.databinding.AllEventsListItemBinding
 
 private var mDataset = mutableListOf<EventEntity>()
 
@@ -17,32 +15,28 @@ class AllEventsListAdapter : RecyclerView.Adapter<AllEventsListAdapter.ViewHolde
         return mDataset.size
     }
 
-    class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        var mTextView: TextView
+    class ViewHolder(val binding: AllEventsListItemBinding) : RecyclerView.ViewHolder(binding.root)
 
-        init {
-            mTextView = v.findViewById(R.id.tv_recycler_item) as TextView
-        }
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = AllEventsListItemBinding.inflate(layoutInflater)
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): AllEventsListAdapter.ViewHolder {
-        val v = LayoutInflater.from(parent.context)
-            .inflate(R.layout.next_events_list_item, parent, false)
-
-        return ViewHolder(v)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.mTextView.text = mDataset[position].person
+        val eventEntity = mDataset[position]
+
+        val textDescription = TextEventDescription(holder.binding.root.context, eventEntity)
+
+        with(holder.binding){
+            descriptionText = textDescription.fullDescriptionText
+            executePendingBindings()
+        }
     }
 
     fun updateList(newData: List<EventEntity>) {
         mDataset = newData.toMutableList()
         notifyDataSetChanged()
     }
-
-
 }
