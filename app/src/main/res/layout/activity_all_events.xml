@@ -5,13 +5,13 @@
 
     <data>
 
-        <!--variable
-            name="employee"
-            type="ru.startandroid.application.data.Employee" /-->
-
         <variable
-            name="employee"
-            type="String" />
+            name="adapter"
+            type="ru.mpoperechny.eventreminder.adapters.AllEventsListAdapter" />
+
+        <!--variable
+            name="viewModel"
+            type="ru.mpoperechny.eventreminder.viewmodel.EventsViewModel" /-->
 
     </data>
 
@@ -20,5 +20,14 @@
         android:layout_height="match_parent"
         tools:context=".activity.AllEventsActivity">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:adapter="@{adapter}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

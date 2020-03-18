@@ -14,6 +14,7 @@ class EventsRepository internal constructor(application: Application) {
 
     init {
         allEvents = eventsDAO.allEvents
+        println("EventsRepository init ${this}")
     }
 
 

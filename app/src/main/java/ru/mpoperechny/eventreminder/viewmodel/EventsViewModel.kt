@@ -18,6 +18,8 @@ class EventsViewModel(application: Application) : AndroidViewModel(application) 
     init {
         repository = EventsRepository(application)
         allEvents = repository.allEvents
+
+        println("EventsViewModel init ${this}")
     }
 
     fun insertEvent(event: EventEntity) {

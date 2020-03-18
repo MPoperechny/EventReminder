@@ -1,21 +1,20 @@
 package ru.mpoperechny.eventreminder.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.observe
 import ru.mpoperechny.eventreminder.R
+import ru.mpoperechny.eventreminder.adapters.AllEventsListAdapter
 import ru.mpoperechny.eventreminder.databinding.ActivityAllEventsBinding
+import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
+
 
 class AllEventsActivity : AppCompatActivity() {
 
-    /*
-    private val binding by lazy {
-        DataBindingUtil.setContentView<ActivityAllEventsBinding>(this, R.layout.activity_all_events).run {
-            lifecycleOwner = this@AllEventsActivity
-            viewModel = userViewModel
-        }
-    }
-*/
+    //todo использовать один репозитоий
+    private val eventsViewModel: EventsViewModel by viewModels()
 
     private val binding: ActivityAllEventsBinding by lazy {
         DataBindingUtil.setContentView<ActivityAllEventsBinding>(this, R.layout.activity_all_events)
@@ -24,9 +23,15 @@ class AllEventsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.employee = "fdgd"
-
         supportActionBar?.title = getString(R.string.all_events_page_toolbar_title)
 
+        //binding.viewModel = eventsViewModel
+
+        val allEventsAdapter = AllEventsListAdapter()
+        binding.adapter = allEventsAdapter
+
+        eventsViewModel.allEvents.observe(this) { it.let(allEventsAdapter::updateList)}
     }
+
+
 }
