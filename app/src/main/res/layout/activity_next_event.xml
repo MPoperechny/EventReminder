@@ -3,10 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <import type="android.view.View"/>
+        <import type="ru.mpoperechny.eventreminder.utilites.UtilsKt"/>
+
+        <variable
+            name="viewModel"
+            type="ru.mpoperechny.eventreminder.viewmodel.EventsViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activity.NextEventActivity">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/no_data_text"
+            android:textSize="20sp"
+            android:visibility="@{viewModel.emptyData ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/nextEventCard"
@@ -19,7 +40,8 @@
             app:layout_constraintHeight_min="0dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{viewModel.emptyData ? View.GONE : View.VISIBLE}">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -47,7 +69,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
-                            android:textSize="18sp" />
+                            android:textSize="18sp"
+                            android:text="@{UtilsKt.timeToDateString(viewModel.nearestEventDay)}"/>
 
                         <TextView
                             android:id="@+id/eventDaysLeft"
@@ -55,7 +78,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:text="@{UtilsKt.daysLeftString(context, viewModel.nearestEventDaysLeft)}"/>
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -66,7 +90,8 @@
                     android:layout_below="@+id/upTable"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_gravity="center_horizontal|top"
-                    android:layout_marginTop="@dimen/margin_mid" />
+                    android:layout_marginTop="@dimen/margin_mid"
+                    app:items = "@{viewModel.nearestEvents}"/>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
@@ -80,7 +105,8 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nextEventCard" />
+            app:layout_constraintTop_toBottomOf="@+id/nextEventCard"
+            android:visibility="@{viewModel.emptyData ? View.GONE : View.VISIBLE}"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/otherEventsRecyclerView"
@@ -93,7 +119,9 @@
             app:layout_constraintBottom_toTopOf="@+id/btAllEvents"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nextText" />
+            app:layout_constraintTop_toBottomOf="@+id/nextText"
+            android:visibility="@{viewModel.emptyData ? View.GONE : View.VISIBLE}"
+            app:items = "@{viewModel.eventsExceptNearest}"/>
 
         <Button
             android:id="@+id/btAllEvents"

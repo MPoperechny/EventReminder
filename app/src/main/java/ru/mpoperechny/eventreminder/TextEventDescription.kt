@@ -2,6 +2,8 @@ package ru.mpoperechny.eventreminder
 
 import android.content.Context
 import ru.mpoperechny.eventreminder.database.EventEntity
+import ru.mpoperechny.eventreminder.utilites.daysLeftString
+import ru.mpoperechny.eventreminder.utilites.timeToDateString
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -9,15 +11,15 @@ class TextEventDescription(val context: Context, event: EventEntity) {
 
     val person: String = event.person ?: ""
 
-    val dateString: String = dateFormat.format(event.date)
+    private val dateString: String = timeToDateString(event.date)
 
     val fullDescriptionText: String =
-        "${event.person}\n${eventTypeString(event.type)} ${dateString}}"
+        "${event.person}\n${eventTypeString(event.type)} ${dateString}"
 
     val shortDescriptionText: String =
         "${event.person}\n ${dateString}"
 
-    val daysLeftMessage = daysLeftString(event.daysLeft)
+    val daysLeftMessage = daysLeftString(context, event.daysLeft)
 
     private fun eventTypeString(eventType: Int): String {
         return when (eventType) {
@@ -26,27 +28,5 @@ class TextEventDescription(val context: Context, event: EventEntity) {
             EventEntity.OTHER -> context.getString(R.string.other_event)
             else -> context.getString(R.string.other_event)
         }
-    }
-
-    private fun daysLeftString(days: Int): String {
-        return when {
-            days == 0 -> context.getString(R.string.today)
-            days == 1 -> context.getString(R.string.tomorrow)
-            days == 2 -> context.getString(R.string.two_days)
-            days in 12..14 -> context.getString(R.string.after) + " " + days.toString() + " " + context.getString(
-                R.string.days_1
-            )
-            days.toString().endsWith("2")
-                    || days.toString().endsWith("3")
-                    || days.toString().endsWith("4")
-            -> context.getString(R.string.after) + " " + days.toString() + " " + context.getString(R.string.days_2)
-            else -> context.getString(R.string.after) + " " + days.toString() + " " + context.getString(
-                R.string.days_1
-            )
-        }
-    }
-
-    companion object {
-        private val dateFormat = SimpleDateFormat("d MMMM", Locale.getDefault())
     }
 }
