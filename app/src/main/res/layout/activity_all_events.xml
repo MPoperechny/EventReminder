@@ -7,7 +7,7 @@
 
         <variable
             name="adapter"
-            type="ru.mpoperechny.eventreminder.adapters.AllEventsListAdapter" />
+            type="ru.mpoperechny.eventreminder.adapters.EventsListAdapter" />
 
         <!--variable
             name="viewModel"

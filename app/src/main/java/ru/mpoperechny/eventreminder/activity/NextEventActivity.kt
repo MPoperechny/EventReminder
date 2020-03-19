@@ -9,8 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.mpoperechny.eventreminder.R
-import ru.mpoperechny.eventreminder.adapters.CardEventsListAdapter
-import ru.mpoperechny.eventreminder.adapters.NextEventsListAdapter
+import ru.mpoperechny.eventreminder.adapters.EventsListAdapter
 import ru.mpoperechny.eventreminder.database.EventEntity
 import ru.mpoperechny.eventreminder.databinding.ActivityNextEventBinding
 import ru.mpoperechny.eventreminder.utilites.daysLeftString
@@ -31,6 +30,9 @@ class NextEventActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_next_event)
 
         supportActionBar?.title = getString(R.string.next_events_page_toolbar_title)
+
+        binding.otherEventsRecyclerView.adapter = EventsListAdapter(R.layout.next_events_list_item)
+        binding.nextEventsRecyclerView.adapter = EventsListAdapter(R.layout.card_events_list_item)
 
         eventsViewModel.allEvents.observe(this) { eventEntities ->
             if (eventEntities.isNullOrEmpty()) showEmptyData() else updateData(eventEntities)
@@ -90,10 +92,11 @@ class NextEventActivity : AppCompatActivity() {
                 listOf(it.person, eventTypeString(it.type))
             }
         )
+
         val mLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.nextEventsRecyclerView.layoutManager = mLayoutManager
-        val mAdapter = CardEventsListAdapter(mDataSet)
-        binding.nextEventsRecyclerView.adapter = mAdapter
+
+        (binding.nextEventsRecyclerView.adapter as EventsListAdapter).updateList(nearestEventEntities)
     }
 
     private fun eventTypeString(eventType: Int): String {
@@ -113,10 +116,11 @@ class NextEventActivity : AppCompatActivity() {
                 it.person + "\n" + dateFormat.format(it.date)
             }
         )
+
         val mLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.otherEventsRecyclerView.layoutManager = mLayoutManager
-        val mAdapter = NextEventsListAdapter(mDataSet)
-        binding.otherEventsRecyclerView.adapter = mAdapter
+
+        (binding.otherEventsRecyclerView.adapter as EventsListAdapter).updateList(eventEntities)
     }
 
 

@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
 import ru.mpoperechny.eventreminder.R
-import ru.mpoperechny.eventreminder.adapters.AllEventsListAdapter
+import ru.mpoperechny.eventreminder.adapters.EventsListAdapter
 import ru.mpoperechny.eventreminder.databinding.ActivityAllEventsBinding
 import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
 
@@ -27,7 +27,7 @@ class AllEventsActivity : AppCompatActivity() {
 
         //binding.viewModel = eventsViewModel
 
-        val allEventsAdapter = AllEventsListAdapter()
+        val allEventsAdapter = EventsListAdapter(R.layout.all_events_list_item)
         binding.adapter = allEventsAdapter
 
         eventsViewModel.allEvents.observe(this) { it.let(allEventsAdapter::updateList)}

@@ -6,5 +6,5 @@ import ru.mpoperechny.eventreminder.database.EventEntity
 
 @BindingAdapter("app:items")
 fun setItems(listView: RecyclerView, items: List<EventEntity>) {
-    (listView.adapter as AllEventsListAdapter).updateList(items)
+    (listView.adapter as EventsListAdapter).updateList(items)
 }
