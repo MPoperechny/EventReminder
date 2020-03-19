@@ -46,7 +46,10 @@ class EventsListAdapter(private val listItemLayoutId: Int) : RecyclerView.Adapte
     override fun onBindViewHolder(holder: EventsListAdapter.ViewHolder, position: Int) {
         val eventEntity = mDataset[position]
         val textDescription = TextEventDescription(holder.itemView.context, eventEntity)
-        holder.binding?.setVariable(BR.description, textDescription)
+        holder.binding?.apply{
+            setVariable(BR.description, textDescription)
+            executePendingBindings()
+        }
     }
 
 }
