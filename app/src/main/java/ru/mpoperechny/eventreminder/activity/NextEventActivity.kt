@@ -33,12 +33,6 @@ class NextEventActivity : AppCompatActivity() {
 
         binding.btAllEvents.setOnClickListener {
             startActivity(Intent(this@NextEventActivity, AllEventsActivity::class.java))
-
-            /*
-            if (!eventsViewModel.allEvents.value.isNullOrEmpty()) {
-                eventsViewModel.deleteEvent(eventsViewModel.allEvents.value!![0]);
-            }
-            */
         }
     }
 

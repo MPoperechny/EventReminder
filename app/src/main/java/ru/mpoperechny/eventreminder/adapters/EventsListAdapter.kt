@@ -15,6 +15,8 @@ class EventsListAdapter(private val listItemLayoutId: Int) : RecyclerView.Adapte
 
     protected var mDataset = mutableListOf<EventEntity>()
 
+    var onItemClick: ((position: Int, type: Int) -> Unit)? = null
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val binding = DataBindingUtil.bind<ViewDataBinding>(view)
     }
@@ -29,7 +31,7 @@ class EventsListAdapter(private val listItemLayoutId: Int) : RecyclerView.Adapte
     ): EventsListAdapter.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(viewType, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view).listen(onItemClick)
     }
 
     override fun getItemCount(): Int {
@@ -47,4 +49,11 @@ class EventsListAdapter(private val listItemLayoutId: Int) : RecyclerView.Adapte
         holder.binding?.setVariable(BR.description, textDescription)
     }
 
+}
+
+fun <T : RecyclerView.ViewHolder> T.listen(event: ((position: Int, type: Int) -> Unit)?): T {
+    itemView.setOnClickListener {
+        event?.invoke(adapterPosition, itemViewType)
+    }
+    return this
 }

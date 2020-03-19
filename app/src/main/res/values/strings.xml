@@ -16,5 +16,6 @@
     <string name="birthday">День рождения</string>
     <string name="holiday">Праздник</string>
     <string name="other_event">Другое</string>
+    <string name="delete_question">Удалить?</string>
 
 </resources>
