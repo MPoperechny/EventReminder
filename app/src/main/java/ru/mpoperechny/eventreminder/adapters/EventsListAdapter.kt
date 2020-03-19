@@ -47,7 +47,7 @@ class EventsListAdapter(private val listItemLayoutId: Int) : RecyclerView.Adapte
 
         val textDescription = TextEventDescription(holder.itemView.context, eventEntity)
 
-        holder.binding?.setVariable(BR.descriptionText, textDescription.fullDescriptionText)
+        holder.binding?.setVariable(BR.description, textDescription)
         /*
         with(holder.binding as NextEventsListItemBinding){
             descriptionText = textDescription.fullDescriptionText

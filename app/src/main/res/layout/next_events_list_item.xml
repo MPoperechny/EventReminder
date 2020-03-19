@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="descriptionText"
-            type="String" />
+            name="description"
+            type="ru.mpoperechny.eventreminder.TextEventDescription" />
     </data>
 
     <LinearLayout
@@ -23,7 +23,7 @@
             android:id="@+id/tv_recycler_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{descriptionText}"/>
+            android:text="@{description.shortDescriptionText}"/>
 
     </LinearLayout>
 </layout>

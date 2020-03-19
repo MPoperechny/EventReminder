@@ -64,6 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/upTable"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     android:layout_gravity="center_horizontal|top"
                     android:layout_marginTop="@dimen/margin_mid" />
             </RelativeLayout>
@@ -88,6 +89,7 @@
             android:layout_gravity="center_horizontal|top"
             android:layout_marginTop="@dimen/margin_small"
             android:layout_marginBottom="@dimen/margin_small"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@+id/btAllEvents"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

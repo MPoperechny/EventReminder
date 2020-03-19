@@ -87,15 +87,6 @@ class NextEventActivity : AppCompatActivity() {
         binding.eventDate.text = dateFormat.format(nearestEventEntities[0].date)
         binding.eventDaysLeft.text = daysLeftString(this, nearestEventEntities[0].daysLeft)
 
-        val mDataSet = ArrayList(
-            nearestEventEntities.map {
-                listOf(it.person, eventTypeString(it.type))
-            }
-        )
-
-        val mLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.nextEventsRecyclerView.layoutManager = mLayoutManager
-
         (binding.nextEventsRecyclerView.adapter as EventsListAdapter).updateList(nearestEventEntities)
     }
 
@@ -108,18 +99,6 @@ class NextEventActivity : AppCompatActivity() {
     }
 
     private fun updateList(eventEntities: List<EventEntity>) {
-
-        val dateFormat = SimpleDateFormat("d MMMM", Locale.getDefault())
-
-        val mDataSet = ArrayList(
-            eventEntities.map {
-                it.person + "\n" + dateFormat.format(it.date)
-            }
-        )
-
-        val mLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.otherEventsRecyclerView.layoutManager = mLayoutManager
-
         (binding.otherEventsRecyclerView.adapter as EventsListAdapter).updateList(eventEntities)
     }
 
