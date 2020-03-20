@@ -1,11 +1,9 @@
 package ru.mpoperechny.eventreminder.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import ru.mpoperechny.eventreminder.OperationProgressState
 import ru.mpoperechny.eventreminder.database.EventEntity
 import ru.mpoperechny.eventreminder.repository.EventsRepository
 
@@ -57,8 +55,23 @@ class EventsViewModel(application: Application) : AndroidViewModel(application) 
         if (it.isNotEmpty()) it[0].daysLeft else 0
     }
 
+
+    // add/edit event
+
+    private val _operationProgress = MutableLiveData<OperationProgressState>()
+    val operationProgress: LiveData<OperationProgressState>
+        get() = _operationProgress
+
     fun insertEvent(event: EventEntity) {
-        viewModelScope.launch { repository.insertEvent(event) }
+        viewModelScope.launch {
+            try {
+                _operationProgress.postValue(OperationProgressState.STARTED)
+                repository.insertEvent(event)
+                _operationProgress.postValue(OperationProgressState.READY)
+            } catch (e: Exception) {
+                _operationProgress.postValue(OperationProgressState.error(e.message))
+            }
+        }
     }
 
     fun insertEvents(vararg events: EventEntity) {

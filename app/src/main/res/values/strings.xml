@@ -20,5 +20,8 @@
     <string name="delete">Удалить</string>
     <string name="edit">Редактировать</string>
     <string name="add_event_button_text">Добавить</string>
+    <string name="save_event_button_text">Сохранить</string>
+    <string name="error">Ошибка</string>
+    <string name="save_success">Данные сохранены</string>
 
 </resources>
