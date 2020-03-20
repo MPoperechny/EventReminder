@@ -9,6 +9,7 @@ import androidx.lifecycle.observe
 import ru.mpoperechny.eventreminder.R
 import ru.mpoperechny.eventreminder.adapters.EventsListAdapter
 import ru.mpoperechny.eventreminder.databinding.ActivityAllEventsBinding
+import ru.mpoperechny.eventreminder.utilites.timeToDateString
 import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
 
 
@@ -38,16 +39,29 @@ class AllEventsActivity : AppCompatActivity() {
 
     private val clickListener: ((position: Int, type: Int) -> Unit)? =
         { pos, _ ->
-            val builder = AlertDialog.Builder(this)
-            builder.setMessage(R.string.delete_question)
-            builder.setPositiveButton(android.R.string.yes) { dialog, which ->
-                eventsViewModel.allEvents.value?.let {
-                    if (it.size > pos) eventsViewModel.deleteEvent(it[pos])
-                }
+            val eventDesc =
+                eventsViewModel.allEvents.value?.get(pos)?.date?.let { timeToDateString(it) }
 
-            }
-            builder.setNegativeButton(android.R.string.no, null)
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage(
+                "${getString(R.string.select_action_for)} $eventDesc"
+            )
+            builder.setPositiveButton(R.string.delete) { _, _ -> confirmDelete(pos) }
+            builder.setNegativeButton(R.string.edit, null)
+            builder.setNeutralButton(android.R.string.no, null)
             builder.show()
         }
+
+    private fun confirmDelete(pos: Int) {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("${getString(R.string.delete)}?")
+        builder.setPositiveButton(android.R.string.yes) { _, _ ->
+            eventsViewModel.allEvents.value?.let {
+                if (it.size > pos) eventsViewModel.deleteEvent(it[pos])
+            }
+        }
+        builder.setNegativeButton(android.R.string.no, null)
+        builder.show()
+    }
 
 }
