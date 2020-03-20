@@ -19,5 +19,6 @@
     <string name="select_action_for">"Выберите действие для "</string>
     <string name="delete">Удалить</string>
     <string name="edit">Редактировать</string>
+    <string name="add_event_button_text">Добавить</string>
 
 </resources>
