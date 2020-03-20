@@ -29,8 +29,6 @@ class NextEventActivity : AppCompatActivity() {
 
         binding.viewModel = eventsViewModel
 
-        //todo предусмотреть смену смену часового пояса в устройстве
-
         binding.btAllEvents.setOnClickListener {
             startActivity(Intent(this@NextEventActivity, AllEventsActivity::class.java))
         }

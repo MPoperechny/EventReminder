@@ -5,6 +5,8 @@ import ru.mpoperechny.eventreminder.R
 import java.text.SimpleDateFormat
 import java.util.*
 
+//todo предусмотреть смену смену часового пояса в устройстве
+
 fun daysLeftString(context:Context, days: Int): String {
     return when {
         days == 0 -> context.getString(R.string.today)

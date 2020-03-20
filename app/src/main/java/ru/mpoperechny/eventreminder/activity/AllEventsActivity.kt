@@ -1,5 +1,6 @@
 package ru.mpoperechny.eventreminder.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -34,6 +35,10 @@ class AllEventsActivity : AppCompatActivity() {
         binding.adapter = allEventsAdapter
 
         eventsViewModel.allEvents.observe(this) { it.let(allEventsAdapter::updateList) }
+
+        binding.btAddEvent.setOnClickListener {
+            startActivity(Intent(this@AllEventsActivity, EditEventActivity::class.java))
+        }
     }
 
 
