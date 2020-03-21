@@ -23,9 +23,13 @@ data class EventEntity(
     //val mark = println("created EventEntity ${this.hashCode()}")
 
     companion object {
-        var BIRTHDAY = 0
-        var HOLIDAY = 1
-        var OTHER = 2
+        const val BIRTHDAY = 0
+        const val HOLIDAY = 1
+        const val OTHER = 2
+    }
+
+    object Values{
+        const val DATE_UNDEFINED_VALUE = Long.MIN_VALUE
     }
 
     private fun daysLeft(timeInMilliseconds: Long): Int {

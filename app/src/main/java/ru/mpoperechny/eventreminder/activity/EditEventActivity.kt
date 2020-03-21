@@ -33,14 +33,19 @@ class EditEventActivity : AppCompatActivity() {
 
         //binding.viewModel = eventsViewModel
 
+        println("viewModel $eventsViewModel")
+
         binding.btSaveEvent.setOnClickListener {
+
+            //todo выводится данные сохранены несколько раз
+
             eventsViewModel.operationProgress.observe(this) {
                 when (it.status) {
                     OperationProgressState.Status.FAILED ->
                         Toast.makeText(this, R.string.error, Toast.LENGTH_LONG).show()
                     OperationProgressState.Status.SUCCESS -> {
                         Toast.makeText(this, R.string.save_success, Toast.LENGTH_LONG).show()
-                        finish()
+                        //finish()
                     }
                     OperationProgressState.Status.RUNNING -> {
                     }
@@ -48,10 +53,10 @@ class EditEventActivity : AppCompatActivity() {
             }
 
             val setDataResult = eventEntityFormatter.setData(
-                person = binding.etName.text.toString(),
-                description = binding.etDescription.text.toString()
+                personNameInput = binding.etName.text.toString(),
+                descriptionInput = binding.etDescription.text.toString(),
+                typeInput = binding.spinner.selectedItemPosition
             )
-            //todo get data from spinner
 
             if(setDataResult == EntityValidator.Result.SUCCESS){
                 eventsViewModel.insertEvent(eventEntityFormatter.currentEventEntity)
@@ -68,7 +73,7 @@ class EditEventActivity : AppCompatActivity() {
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     //println("selected $dayOfMonth $monthOfYear $year")
                     eventEntityFormatter.setData(
-                        date = GregorianCalendar(
+                        dateInput = GregorianCalendar(
                             year,
                             monthOfYear,
                             dayOfMonth
