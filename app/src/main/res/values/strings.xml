@@ -15,7 +15,7 @@
     <string name="after">Через</string>
     <string name="birthday">День рождения</string>
     <string name="holiday">Праздник</string>
-    <string name="other_event">Другое</string>
+    <string name="other_event">Другое событие</string>
     <string name="select_action_for">"Выберите действие для "</string>
     <string name="delete">Удалить</string>
     <string name="edit">Редактировать</string>
@@ -23,5 +23,13 @@
     <string name="save_event_button_text">Сохранить</string>
     <string name="error">Ошибка</string>
     <string name="save_success">Данные сохранены</string>
+    <string name="name_hint">Имя</string>
+    <string name="additional_info_hint">Дополнительная информация</string>
+
+    <string-array name="spinner_event_types_array">
+        <item>@string/birthday</item>
+        <item>@string/holiday</item>
+        <item>@string/other_event</item>
+    </string-array>
 
 </resources>
