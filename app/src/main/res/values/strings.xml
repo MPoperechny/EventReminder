@@ -24,11 +24,14 @@
     <string name="error">Ошибка</string>
     <string name="save_success">Данные сохранены</string>
     <string name="name_hint">Имя</string>
-    <string name="additional_info_hint">Дополнительная информация</string>
+    <string name="additional_info_hint">Описание события</string>
     <string name="missing_date">Необходимо выбрать дату</string>
     <string name="missing_person">Необходимо указать имя</string>
     <string name="missing_desc">Необходимо заполнить описание события</string>
     <string name="missing_any_info">Необходимо заполнить информацию о событии или указать имя</string>
+    <string name="select_date">Выбрать дату</string>
+    <string name="new_event_page_toolbar_title">Новое событие</string>
+    <string name="event_type_title">Тип события:</string>
 
     <string-array name="spinner_event_types_array">
         <item>@string/birthday</item>

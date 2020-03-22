@@ -67,6 +67,10 @@ class EventsViewModel(application: Application) : AndroidViewModel(application) 
     val saveProgress: LiveData<LiveDataEvent<OperationProgressState>>
         get() = _saveProgress
 
+    private val _currentEventDate = MutableLiveData<Long?>()
+    val currentEventDate: LiveData<Long?>
+        get() = _currentEventDate
+
     fun insertEvent(event: EventEntity) {
         viewModelScope.launch {
             try {
@@ -85,7 +89,13 @@ class EventsViewModel(application: Application) : AndroidViewModel(application) 
         personNameInput: String? = null,
         descriptionInput: String? = null
     ): EntityValidator.Result {
-        return eventEntityEditor.setData(dateInput, typeInput, personNameInput, descriptionInput)
+        val result = eventEntityEditor.setData(dateInput, typeInput, personNameInput, descriptionInput)
+
+        var currentDate:Long? = eventEntityEditor.currentEventEntity.date;
+        if(currentDate == EventEntity.Values.DATE_UNDEFINED_VALUE) currentDate = null
+        _currentEventDate.postValue(currentDate)
+
+        return result
     }
 
     fun insertEvents(vararg events: EventEntity) {

@@ -19,43 +19,75 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
+            android:layout_marginStart="@dimen/margin_main"
+            android:layout_marginEnd="@dimen/margin_main"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:hint="@string/name_hint"/>
+            android:hint="@string/name_hint"
+            android:maxLines="3"
+            android:imeOptions="actionDone"
+            android:inputType="text"/>
 
         <EditText
             android:id="@+id/etDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginStart="@dimen/margin_main"
+            android:layout_marginEnd="@dimen/margin_main"
+            android:textSize="18sp"
             android:hint="@string/additional_info_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etName" />
+            app:layout_constraintTop_toBottomOf="@+id/etName"
+            android:imeOptions="actionDone"
+            android:inputType="text"/>
+
+        <TextView
+            android:id="@+id/tvDayPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:layout_marginStart="@dimen/margin_main"
+            android:layout_marginEnd="@dimen/margin_main"
+            android:textSize="18sp"
+            android:text="@string/select_date"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etDescription" />
+
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:layout_marginStart="@dimen/margin_main"
+            android:layout_marginEnd="@dimen/margin_main"
+            android:textSize="18sp"
+            android:text="@string/event_type_title"
+            android:textColor="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDayPicker" />
 
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginStart="@dimen/margin_main"
+            android:layout_marginEnd="@dimen/margin_main"
             android:entries="@array/spinner_event_types_array"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvType"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etDescription" />
-
-        <Button
-            android:id="@+id/btDayPicker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etDescription" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btSaveEvent"

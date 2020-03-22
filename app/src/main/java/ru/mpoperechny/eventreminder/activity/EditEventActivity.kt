@@ -1,23 +1,24 @@
 package ru.mpoperechny.eventreminder.activity
 
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import ru.mpoperechny.eventreminder.*
 import ru.mpoperechny.eventreminder.databinding.ActivityEditEventBinding
+import ru.mpoperechny.eventreminder.utilites.timeToDateString
 import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
 import java.util.*
 
 
 class EditEventActivity : AppCompatActivity() {
 
-    //todo высота лейаута
-    //todo отступы
+    //todo горизонтальная ориентация
 
     private val eventsViewModel: EventsViewModel by viewModels()
     private val binding: ActivityEditEventBinding by lazy {
@@ -27,11 +28,15 @@ class EditEventActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        supportActionBar?.title = getString(R.string.all_events_page_toolbar_title)
+        supportActionBar?.title = getString(R.string.new_event_page_toolbar_title)
 
         //binding.viewModel = eventsViewModel
 
         eventsViewModel.saveProgress.observe(this, saveStateObserver)
+        eventsViewModel.currentEventDate.observe(this) {
+           // it?.let{binding.tvDayPicker.text = timeToDateString(it)} ?:
+           binding.tvDayPicker.text = if (it != null) timeToDateString(it) else getString(R.string.select_date)
+        }
 
         binding.btSaveEvent.setOnClickListener {
 
@@ -50,25 +55,24 @@ class EditEventActivity : AppCompatActivity() {
             }
         }
 
-        binding.btDayPicker.setOnClickListener {
+        binding.tvDayPicker.setOnClickListener {
             val cal = Calendar.getInstance()
             val datePickerDialog = DatePickerDialog(
                 this,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     //println("selected $dayOfMonth $monthOfYear $year")
-                    eventsViewModel.setData(
-                        dateInput = GregorianCalendar(year, monthOfYear, dayOfMonth).timeInMillis
-                    )
+                    val time = GregorianCalendar(year, monthOfYear, dayOfMonth).timeInMillis
+                    eventsViewModel.setData(dateInput = time)
                 }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)
             )
             datePickerDialog.show()
         }
     }
 
-    private fun showMessage(message: String) {
+    private fun showMessage(message: String, onClick: DialogInterface.OnClickListener? = null) {
         val builder = AlertDialog.Builder(this)
         builder.setMessage(message)
-        builder.setPositiveButton(android.R.string.ok, null)
+        builder.setPositiveButton(android.R.string.ok, onClick)
         builder.show()
     }
 
@@ -76,10 +80,11 @@ class EditEventActivity : AppCompatActivity() {
         it.getContentIfNotHandled()?.let { state ->
             when (state.status) {
                 OperationProgressState.Status.FAILED ->
-                    Toast.makeText(this, R.string.error, Toast.LENGTH_LONG).show()
+                    showMessage(getString(R.string.error))
                 OperationProgressState.Status.SUCCESS -> {
-                    Toast.makeText(this, R.string.save_success, Toast.LENGTH_LONG).show()
-                    //finish()
+                    showMessage(
+                        getString(R.string.save_success),
+                        DialogInterface.OnClickListener { _, _ -> finish() })
                 }
                 OperationProgressState.Status.RUNNING -> {
                 }
