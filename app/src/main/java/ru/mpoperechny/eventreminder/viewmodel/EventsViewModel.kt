@@ -3,6 +3,9 @@ package ru.mpoperechny.eventreminder.viewmodel
 import android.app.Application
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import ru.mpoperechny.eventreminder.EntityValidator
+import ru.mpoperechny.eventreminder.EventEntityEditor
+import ru.mpoperechny.eventreminder.LiveDataEvent
 import ru.mpoperechny.eventreminder.OperationProgressState
 import ru.mpoperechny.eventreminder.database.EventEntity
 import ru.mpoperechny.eventreminder.repository.EventsRepository
@@ -56,22 +59,33 @@ class EventsViewModel(application: Application) : AndroidViewModel(application) 
     }
 
 
-    // add/edit event
+    // add/edit event page
 
-    private val _operationProgress = MutableLiveData<OperationProgressState>()
-    val operationProgress: LiveData<OperationProgressState>
-        get() = _operationProgress
+    val eventEntityEditor = EventEntityEditor()
+
+    private val _saveProgress = MutableLiveData<LiveDataEvent<OperationProgressState>>()
+    val saveProgress: LiveData<LiveDataEvent<OperationProgressState>>
+        get() = _saveProgress
 
     fun insertEvent(event: EventEntity) {
         viewModelScope.launch {
             try {
-                _operationProgress.postValue(OperationProgressState.STARTED)
+                _saveProgress.value = LiveDataEvent(OperationProgressState.STARTED)
                 repository.insertEvent(event)
-                _operationProgress.postValue(OperationProgressState.READY)
+                _saveProgress.value = LiveDataEvent(OperationProgressState.READY)
             } catch (e: Exception) {
-                _operationProgress.postValue(OperationProgressState.error(e.message))
+                _saveProgress.value = LiveDataEvent(OperationProgressState.error(e.message))
             }
         }
+    }
+
+    fun setData(
+        dateInput: Long? = null,
+        typeInput: Int? = null,
+        personNameInput: String? = null,
+        descriptionInput: String? = null
+    ): EntityValidator.Result {
+        return eventEntityEditor.setData(dateInput, typeInput, personNameInput, descriptionInput)
     }
 
     fun insertEvents(vararg events: EventEntity) {

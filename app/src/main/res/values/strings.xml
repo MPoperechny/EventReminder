@@ -25,6 +25,10 @@
     <string name="save_success">Данные сохранены</string>
     <string name="name_hint">Имя</string>
     <string name="additional_info_hint">Дополнительная информация</string>
+    <string name="missing_date">Необходимо выбрать дату</string>
+    <string name="missing_person">Необходимо указать имя</string>
+    <string name="missing_desc">Необходимо заполнить описание события</string>
+    <string name="missing_any_info">Необходимо заполнить информацию о событии или указать имя</string>
 
     <string-array name="spinner_event_types_array">
         <item>@string/birthday</item>

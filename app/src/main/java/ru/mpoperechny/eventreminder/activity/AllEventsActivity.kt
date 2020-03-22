@@ -16,6 +16,7 @@ import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
 
 class AllEventsActivity : AppCompatActivity() {
 
+    //todo сортировать список
     //todo использовать один репозитоий
     private val eventsViewModel: EventsViewModel by viewModels()
 

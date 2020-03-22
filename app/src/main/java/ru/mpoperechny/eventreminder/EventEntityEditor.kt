@@ -2,7 +2,7 @@ package ru.mpoperechny.eventreminder
 
 import ru.mpoperechny.eventreminder.database.EventEntity
 
-class EventEntityFormatter {
+class EventEntityEditor {
     var currentEventEntity = EventEntity(EventEntity.Values.DATE_UNDEFINED_VALUE, 0, null, null)
 
     fun setData(
