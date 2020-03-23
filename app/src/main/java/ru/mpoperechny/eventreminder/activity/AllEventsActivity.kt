@@ -46,6 +46,16 @@ class AllEventsActivity : AppCompatActivity() {
             val intent = Intent(this@AllEventsActivity, EditEventActivity::class.java)
             startActivity(intent)
         }
+
+        binding.btDeleteAll.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("${getString(R.string.delete_all)}?")
+            builder.setPositiveButton(android.R.string.yes) { _, _ ->
+                eventsViewModel.deleteAll()
+            }
+            builder.setNegativeButton(android.R.string.no, null)
+            builder.show()
+        }
     }
 
 
