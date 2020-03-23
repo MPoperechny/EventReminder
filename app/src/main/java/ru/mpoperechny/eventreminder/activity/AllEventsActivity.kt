@@ -10,7 +10,6 @@ import androidx.lifecycle.observe
 import ru.mpoperechny.eventreminder.R
 import ru.mpoperechny.eventreminder.adapters.EventsListAdapter
 import ru.mpoperechny.eventreminder.databinding.ActivityAllEventsBinding
-import ru.mpoperechny.eventreminder.utilites.FactoryProvider
 import ru.mpoperechny.eventreminder.utilites.FactoryProvider.provideEventsViewModelFactory
 import ru.mpoperechny.eventreminder.utilites.timeToDateString
 import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
@@ -43,12 +42,6 @@ class AllEventsActivity : AppCompatActivity() {
 
         binding.btAddEvent.setOnClickListener {
             val intent = Intent(this@AllEventsActivity, EditEventActivity::class.java)
-
-            eventsViewModel.allEvents.value?.get(0)?.id?.let {
-                intent.putExtra("eventId", it)
-            }
-
-
             startActivity(intent)
         }
     }
@@ -64,10 +57,18 @@ class AllEventsActivity : AppCompatActivity() {
                 "${getString(R.string.select_action_for)} $eventDesc"
             )
             builder.setPositiveButton(R.string.delete) { _, _ -> confirmDelete(pos) }
-            builder.setNegativeButton(R.string.edit, null)
+            builder.setNegativeButton(R.string.edit, {_, _ -> editEvent(pos)})
             builder.setNeutralButton(android.R.string.no, null)
             builder.show()
         }
+
+    private fun editEvent(pos: Int) {
+        val intent = Intent(this@AllEventsActivity, EditEventActivity::class.java)
+        eventsViewModel.allEvents.value?.get(pos)?.id?.let {
+            intent.putExtra("eventId", it)
+        }
+        startActivity(intent)
+    }
 
     private fun confirmDelete(pos: Int) {
         val builder = AlertDialog.Builder(this)

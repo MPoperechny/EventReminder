@@ -8,13 +8,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import ru.mpoperechny.eventreminder.*
 import ru.mpoperechny.eventreminder.databinding.ActivityEditEventBinding
-import ru.mpoperechny.eventreminder.utilites.FactoryProvider
+import ru.mpoperechny.eventreminder.utilites.FactoryProvider.provideEditEventViewModelFactory
 import ru.mpoperechny.eventreminder.utilites.timeToDateString
-import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
+import ru.mpoperechny.eventreminder.viewmodel.EditEventViewModel
 import java.util.*
 
 
@@ -23,8 +22,8 @@ class EditEventActivity : AppCompatActivity() {
     //todo горизонтальная ориентация
 
 
-    private val eventsViewModel: EventsViewModel by viewModels {
-        FactoryProvider.provideEventsViewModelFactory(application)
+    private val viewModel: EditEventViewModel by viewModels {
+        provideEditEventViewModelFactory(application, 345)
     }
     private val binding: ActivityEditEventBinding by lazy {
         DataBindingUtil.setContentView<ActivityEditEventBinding>(this, R.layout.activity_edit_event)
@@ -40,22 +39,21 @@ class EditEventActivity : AppCompatActivity() {
 
         //binding.viewModel = eventsViewModel
 
-        eventsViewModel.saveProgress.observe(this, saveStateObserver)
-        eventsViewModel.currentEventDate.observe(this) {
-           // it?.let{binding.tvDayPicker.text = timeToDateString(it)} ?:
-           binding.tvDayPicker.text = if (it != null) timeToDateString(it) else getString(R.string.select_date)
+        viewModel.saveProgress.observe(this, saveStateObserver)
+        viewModel.currentEventDate.observe(this) {
+            binding.tvDayPicker.text = if (it != null) timeToDateString(it) else getString(R.string.select_date)
         }
 
         binding.btSaveEvent.setOnClickListener {
 
-            val setDataResult = eventsViewModel.setData(
+            val setDataResult = viewModel.setData(
                 personNameInput = binding.etName.text.toString(),
                 descriptionInput = binding.etDescription.text.toString(),
                 typeInput = binding.spinner.selectedItemPosition
             )
 
             when (setDataResult) {
-                EntityValidator.Result.SUCCESS -> eventsViewModel.insertEvent(eventsViewModel.eventEntityEditor.currentEventEntity)
+                EntityValidator.Result.SUCCESS -> viewModel.saveEvent()
                 EntityValidator.Result.MISSING_DATE -> showMessage(getString(R.string.missing_date))
                 EntityValidator.Result.MISSING_PERSON -> showMessage(getString(R.string.missing_person))
                 EntityValidator.Result.MISSING_DESCRIPTION -> showMessage(getString(R.string.missing_desc))
@@ -70,7 +68,7 @@ class EditEventActivity : AppCompatActivity() {
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     //println("selected $dayOfMonth $monthOfYear $year")
                     val time = GregorianCalendar(year, monthOfYear, dayOfMonth).timeInMillis
-                    eventsViewModel.setData(dateInput = time)
+                    viewModel.setData(dateInput = time)
                 }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)
             )
             datePickerDialog.show()
