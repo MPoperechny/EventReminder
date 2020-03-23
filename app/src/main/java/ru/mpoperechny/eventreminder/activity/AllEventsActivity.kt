@@ -10,6 +10,8 @@ import androidx.lifecycle.observe
 import ru.mpoperechny.eventreminder.R
 import ru.mpoperechny.eventreminder.adapters.EventsListAdapter
 import ru.mpoperechny.eventreminder.databinding.ActivityAllEventsBinding
+import ru.mpoperechny.eventreminder.utilites.FactoryProvider
+import ru.mpoperechny.eventreminder.utilites.FactoryProvider.provideEventsViewModelFactory
 import ru.mpoperechny.eventreminder.utilites.timeToDateString
 import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
 
@@ -17,8 +19,10 @@ import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
 class AllEventsActivity : AppCompatActivity() {
 
     //todo сортировать список
-    //todo использовать один репозитоий
-    private val eventsViewModel: EventsViewModel by viewModels()
+
+    private val eventsViewModel: EventsViewModel by viewModels {
+        provideEventsViewModelFactory(application)
+    }
 
     private val binding: ActivityAllEventsBinding by lazy {
         DataBindingUtil.setContentView<ActivityAllEventsBinding>(this, R.layout.activity_all_events)
@@ -38,7 +42,14 @@ class AllEventsActivity : AppCompatActivity() {
         eventsViewModel.allEvents.observe(this) { it.let(allEventsAdapter::updateList) }
 
         binding.btAddEvent.setOnClickListener {
-            startActivity(Intent(this@AllEventsActivity, EditEventActivity::class.java))
+            val intent = Intent(this@AllEventsActivity, EditEventActivity::class.java)
+
+            eventsViewModel.allEvents.value?.get(0)?.id?.let {
+                intent.putExtra("eventId", it)
+            }
+
+
+            startActivity(intent)
         }
     }
 

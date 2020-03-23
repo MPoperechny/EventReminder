@@ -7,7 +7,7 @@ import ru.mpoperechny.eventreminder.database.EventEntity
 import ru.mpoperechny.eventreminder.database.EventsDAO
 import ru.mpoperechny.eventreminder.database.EventsDatabase
 
-class EventsRepository internal constructor(application: Application) {
+class EventsRepository private constructor(application: Application) {
 
     private var eventsDAO: EventsDAO = EventsDatabase.getDatabase(application).eventsDao
     var allEvents: LiveData<List<EventEntity>>
@@ -32,6 +32,13 @@ class EventsRepository internal constructor(application: Application) {
 
     suspend fun deleteAll() {
         eventsDAO.deleteAll()
+    }
+
+    companion object {
+        private var instance: EventsRepository? = null
+
+        fun getInstance(application: Application) =
+            instance ?: EventsRepository(application).also { instance = it }
     }
 
 }

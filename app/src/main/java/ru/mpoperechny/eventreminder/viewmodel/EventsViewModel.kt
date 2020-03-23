@@ -1,6 +1,5 @@
 package ru.mpoperechny.eventreminder.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import ru.mpoperechny.eventreminder.EntityValidator
@@ -10,16 +9,14 @@ import ru.mpoperechny.eventreminder.OperationProgressState
 import ru.mpoperechny.eventreminder.database.EventEntity
 import ru.mpoperechny.eventreminder.repository.EventsRepository
 
-//todo change AndroidViewModel to ViewModel
-class EventsViewModel(application: Application) : AndroidViewModel(application) {
+class EventsViewModel(private val repository: EventsRepository) : ViewModel() {
 
-    private val repository: EventsRepository
+    //private val repository: EventsRepository
 
-    internal var allEvents: LiveData<List<EventEntity>>
+    internal var allEvents: LiveData<List<EventEntity>> = repository.allEvents
 
     init {
-        repository = EventsRepository(application)
-        allEvents = repository.allEvents
+        //repository = EventsRepository(application)
 
         println("EventsViewModel init ${this}")
     }

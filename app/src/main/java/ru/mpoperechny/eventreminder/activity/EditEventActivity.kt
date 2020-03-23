@@ -8,9 +8,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import ru.mpoperechny.eventreminder.*
 import ru.mpoperechny.eventreminder.databinding.ActivityEditEventBinding
+import ru.mpoperechny.eventreminder.utilites.FactoryProvider
 import ru.mpoperechny.eventreminder.utilites.timeToDateString
 import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
 import java.util.*
@@ -20,13 +22,19 @@ class EditEventActivity : AppCompatActivity() {
 
     //todo горизонтальная ориентация
 
-    private val eventsViewModel: EventsViewModel by viewModels()
+
+    private val eventsViewModel: EventsViewModel by viewModels {
+        FactoryProvider.provideEventsViewModelFactory(application)
+    }
     private val binding: ActivityEditEventBinding by lazy {
         DataBindingUtil.setContentView<ActivityEditEventBinding>(this, R.layout.activity_edit_event)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        println("extra ${intent?.getIntExtra("eventId", 100)}")
+        println("savedInstanceState ${savedInstanceState}")
 
         supportActionBar?.title = getString(R.string.new_event_page_toolbar_title)
 
