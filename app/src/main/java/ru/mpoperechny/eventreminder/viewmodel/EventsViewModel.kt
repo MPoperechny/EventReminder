@@ -1,29 +1,20 @@
 package ru.mpoperechny.eventreminder.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.mpoperechny.eventreminder.EntityValidator
-import ru.mpoperechny.eventreminder.EventEntityEditor
-import ru.mpoperechny.eventreminder.LiveDataEvent
-import ru.mpoperechny.eventreminder.OperationProgressState
 import ru.mpoperechny.eventreminder.database.EventEntity
 import ru.mpoperechny.eventreminder.repository.EventsRepository
 
 class EventsViewModel(private val repository: EventsRepository) : ViewModel() {
 
-    //private val repository: EventsRepository
-
     internal var allEvents: LiveData<List<EventEntity>> = repository.allEvents
-
-    init {
-        //repository = EventsRepository(application)
-
-        println("EventsViewModel init ${this}")
-    }
 
     val emptyData: LiveData<Boolean> = Transformations.map(allEvents) { it.isEmpty() }
 
-    val sortedAllEvents: LiveData<List<EventEntity>> =
+    private val sortedAllEvents: LiveData<List<EventEntity>> =
         Transformations.map(allEvents) { eventEntities ->
             eventEntities.sortedBy { it.daysLeft }
         }
@@ -56,43 +47,9 @@ class EventsViewModel(private val repository: EventsRepository) : ViewModel() {
     }
 
 
-    // add/edit event page
-
-    val eventEntityEditor = EventEntityEditor()
-
-    private val _saveProgress = MutableLiveData<LiveDataEvent<OperationProgressState>>()
-    val saveProgress: LiveData<LiveDataEvent<OperationProgressState>>
-        get() = _saveProgress
-
-    private val _currentEventDate = MutableLiveData<Long?>()
-    val currentEventDate: LiveData<Long?>
-        get() = _currentEventDate
 
     fun insertEvent(event: EventEntity) {
-        viewModelScope.launch {
-            try {
-                _saveProgress.value = LiveDataEvent(OperationProgressState.STARTED)
-                repository.insertEvent(event)
-                _saveProgress.value = LiveDataEvent(OperationProgressState.READY)
-            } catch (e: Exception) {
-                _saveProgress.value = LiveDataEvent(OperationProgressState.error(e.message))
-            }
-        }
-    }
-
-    fun setData(
-        dateInput: Long? = null,
-        typeInput: Int? = null,
-        personNameInput: String? = null,
-        descriptionInput: String? = null
-    ): EntityValidator.Result {
-        val result = eventEntityEditor.setData(dateInput, typeInput, personNameInput, descriptionInput)
-
-        var currentDate:Long? = eventEntityEditor.currentEventEntity.date;
-        if(currentDate == EventEntity.Values.DATE_UNDEFINED_VALUE) currentDate = null
-        _currentEventDate.postValue(currentDate)
-
-        return result
+        viewModelScope.launch { repository.insertEvent(event) }
     }
 
     fun insertEvents(vararg events: EventEntity) {

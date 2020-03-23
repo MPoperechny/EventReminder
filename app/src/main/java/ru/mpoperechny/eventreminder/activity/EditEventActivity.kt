@@ -9,10 +9,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
-import ru.mpoperechny.eventreminder.*
+import ru.mpoperechny.eventreminder.EntityValidator
+import ru.mpoperechny.eventreminder.LiveDataEvent
+import ru.mpoperechny.eventreminder.OperationProgressState
+import ru.mpoperechny.eventreminder.R
 import ru.mpoperechny.eventreminder.databinding.ActivityEditEventBinding
 import ru.mpoperechny.eventreminder.utilites.FactoryProvider.provideEditEventViewModelFactory
-import ru.mpoperechny.eventreminder.utilites.timeToDateString
 import ru.mpoperechny.eventreminder.viewmodel.EditEventViewModel
 import java.util.*
 
@@ -39,25 +41,22 @@ class EditEventActivity : AppCompatActivity() {
 
         intent?.let { if (it.hasExtra(EVENT_ID)) eventId = it.extras?.getInt(EVENT_ID) }
 
-        supportActionBar?.title = getString(R.string.new_event_page_toolbar_title)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
 
-        //binding.viewModel = eventsViewModel
-
-        viewModel.saveProgress.observe(this, saveStateObserver)
-        viewModel.currentEventDate.observe(this) {
-            binding.tvDayPicker.text =
-                if (it != null) timeToDateString(it) else getString(R.string.select_date)
+        viewModel.newEvent.observe(this) {
+            it?.let {
+                if (it) supportActionBar?.title = getString(R.string.new_event_page_toolbar_title)
+                else supportActionBar?.title = getString(R.string.edit_event_page_toolbar_title)
+            }
         }
 
+        viewModel.saveProgress.observe(this, saveStateObserver)
+
         binding.btSaveEvent.setOnClickListener {
+            sendData()
 
-            val setDataResult = viewModel.setData(
-                personNameInput = binding.etName.text.toString(),
-                descriptionInput = binding.etDescription.text.toString(),
-                typeInput = binding.spinner.selectedItemPosition
-            )
-
-            when (setDataResult) {
+            when (viewModel.validateCurrentData()) {
                 EntityValidator.Result.SUCCESS -> viewModel.saveEvent()
                 EntityValidator.Result.MISSING_DATE -> showMessage(getString(R.string.missing_date))
                 EntityValidator.Result.MISSING_PERSON -> showMessage(getString(R.string.missing_person))
@@ -72,12 +71,20 @@ class EditEventActivity : AppCompatActivity() {
                 this,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     //println("selected $dayOfMonth $monthOfYear $year")
-                    val time = GregorianCalendar(year, monthOfYear, dayOfMonth).timeInMillis
-                    viewModel.setData(dateInput = time)
+                    sendData(GregorianCalendar(year, monthOfYear, dayOfMonth).timeInMillis)
                 }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)
             )
             datePickerDialog.show()
         }
+    }
+
+    private fun sendData(time: Long? = null) {
+        viewModel.setData(
+            dateInput = time,
+            typeInput = binding.spinner.selectedItemPosition,
+            personNameInput = binding.etName.text.toString(),
+            descriptionInput = binding.etDescription.text.toString()
+        )
     }
 
     private fun showMessage(message: String, onClick: DialogInterface.OnClickListener? = null) {

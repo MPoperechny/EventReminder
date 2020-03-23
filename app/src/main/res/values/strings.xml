@@ -31,7 +31,9 @@
     <string name="missing_any_info">Необходимо заполнить информацию о событии или указать имя</string>
     <string name="select_date">Выбрать дату</string>
     <string name="new_event_page_toolbar_title">Новое событие</string>
+    <string name="edit_event_page_toolbar_title">Редактировать событие</string>
     <string name="event_type_title">Тип события:</string>
+
 
     <string-array name="spinner_event_types_array">
         <item>@string/birthday</item>

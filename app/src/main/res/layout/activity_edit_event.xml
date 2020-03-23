@@ -4,9 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <!--variable
+
+        <import type="android.view.View"/>
+        <import type="ru.mpoperechny.eventreminder.utilites.UtilsKt"/>
+
+        <variable
             name="viewModel"
-            type="ru.mpoperechny.eventreminder.viewmodel.EventsViewModel" /-->
+            type="ru.mpoperechny.eventreminder.viewmodel.EditEventViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +32,8 @@
             android:hint="@string/name_hint"
             android:maxLines="3"
             android:imeOptions="actionDone"
-            android:inputType="text"/>
+            android:inputType="text"
+            android:text="@{viewModel.currentEventPerson}"/>
 
         <EditText
             android:id="@+id/etDescription"
@@ -44,7 +49,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etName"
             android:imeOptions="actionDone"
-            android:inputType="text"/>
+            android:inputType="text"
+            android:text="@{viewModel.currentEventDesc}"/>
 
         <TextView
             android:id="@+id/tvDayPicker"
@@ -54,12 +60,12 @@
             android:layout_marginStart="@dimen/margin_main"
             android:layout_marginEnd="@dimen/margin_main"
             android:textSize="18sp"
-            android:text="@string/select_date"
             android:textColor="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etDescription" />
+            app:layout_constraintTop_toBottomOf="@+id/etDescription"
+            android:text="@{viewModel.currentEventDate != null ? UtilsKt.timeToDateString(viewModel.currentEventDate) : @string/select_date}"/>
 
         <TextView
             android:id="@+id/tvType"
@@ -87,7 +93,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/tvType"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:activeItem="@{viewModel.currentEventType}"/>
 
         <Button
             android:id="@+id/btSaveEvent"

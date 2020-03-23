@@ -14,31 +14,53 @@ class EditEventViewModel(
     private val eventId: Int? = null
 ) : ViewModel() {
 
+    var currentEventEntity = EventEntity(EventEntity.Values.DATE_UNDEFINED_VALUE, 0, null, null)
+
     private var allEvents: LiveData<List<EventEntity>> = repository.allEvents
 
     private val eventEntityEditor = EventEntityEditor()
 
     private var newEventMode = true
 
+    private val _currentEventDate = MutableLiveData<Long?>()
+    val currentEventDate: LiveData<Long?>
+        get() = _currentEventDate
+
+    private val _currentEventType = MutableLiveData<Int?>()
+    val currentEventType: LiveData<Int?>
+        get() = _currentEventType
+
+    private val _currentEventPerson = MutableLiveData<String?>()
+    val currentEventPerson: LiveData<String?>
+        get() = _currentEventPerson
+
+    private val _currentEventDesc = MutableLiveData<String?>()
+    val currentEventDesc: LiveData<String?>
+        get() = _currentEventDesc
+
+    private val _newEvent = MutableLiveData<Boolean>()
+    val newEvent: LiveData<Boolean?>
+        get() = _newEvent
+
     init {
         eventId?.let {
             val currentEvent = allEvents.value?.singleOrNull { eventEntity -> eventEntity.id == it }
             currentEvent?.let {
-                eventEntityEditor.currentEventEntity = currentEvent
+                currentEventEntity = currentEvent
                 newEventMode = false
+                updateViewData()
             }
         }
+
+        _newEvent.value = newEventMode
     }
 
     private val _saveProgress = MutableLiveData<LiveDataEvent<OperationProgressState>>()
     val saveProgress: LiveData<LiveDataEvent<OperationProgressState>>
         get() = _saveProgress
 
-    private val _currentEventDate = MutableLiveData<Long?>()
-    val currentEventDate: LiveData<Long?>
-        get() = _currentEventDate
 
-    //todo use update for edit mode
+    //todo use update/replace for edit mode
     private fun insertEvent(event: EventEntity) {
         viewModelScope.launch {
             try {
@@ -56,20 +78,27 @@ class EditEventViewModel(
         typeInput: Int? = null,
         personNameInput: String? = null,
         descriptionInput: String? = null
-    ): EntityValidator.Result {
-        val result =
-            eventEntityEditor.setData(dateInput, typeInput, personNameInput, descriptionInput)
+    ) {
+        eventEntityEditor.setData(currentEventEntity, dateInput, typeInput, personNameInput, descriptionInput)
+        updateViewData()
+    }
 
-        var currentDate: Long? = eventEntityEditor.currentEventEntity.date;
+    fun validateCurrentData(): EntityValidator.Result {
+        return EntityValidator.checkEntityData(currentEventEntity)
+    }
+
+    private fun updateViewData() {
+        var currentDate: Long? = currentEventEntity.date;
         if (currentDate == EventEntity.Values.DATE_UNDEFINED_VALUE) currentDate = null
-        _currentEventDate.postValue(currentDate)
+        _currentEventDate.value = currentDate
 
-        return result
+        _currentEventPerson.value = currentEventEntity.person
+        _currentEventDesc.value = currentEventEntity.description
+        _currentEventType.value = currentEventEntity.type
     }
 
     fun saveEvent() {
-        insertEvent(eventEntityEditor.currentEventEntity)
+        insertEvent(currentEventEntity)
     }
-
 
 }

@@ -32,6 +32,8 @@ class AllEventsActivity : AppCompatActivity() {
 
         supportActionBar?.title = getString(R.string.all_events_page_toolbar_title)
 
+        binding.lifecycleOwner = this
+
         //binding.viewModel = eventsViewModel
 
         val allEventsAdapter = EventsListAdapter(R.layout.all_events_list_item)

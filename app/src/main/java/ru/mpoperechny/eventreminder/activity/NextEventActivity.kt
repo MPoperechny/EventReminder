@@ -25,7 +25,7 @@ class NextEventActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.next_events_page_toolbar_title)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_next_event)
-        binding.setLifecycleOwner(this);
+        binding.lifecycleOwner = this
 
         binding.nextEventsRecyclerView.adapter = EventsListAdapter(R.layout.card_events_list_item)
         binding.otherEventsRecyclerView.adapter = EventsListAdapter(R.layout.next_events_list_item)
