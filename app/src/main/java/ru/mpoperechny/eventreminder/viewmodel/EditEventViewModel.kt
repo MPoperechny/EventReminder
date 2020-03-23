@@ -9,18 +9,26 @@ import ru.mpoperechny.eventreminder.OperationProgressState
 import ru.mpoperechny.eventreminder.database.EventEntity
 import ru.mpoperechny.eventreminder.repository.EventsRepository
 
-class EditEventViewModel(private val repository: EventsRepository, private val eventId: Int? = null) :
-    ViewModel() {
-
-    init{
-        println("set eventId $eventId")
-    }
+class EditEventViewModel(
+    private val repository: EventsRepository,
+    private val eventId: Int? = null
+) : ViewModel() {
 
     private var allEvents: LiveData<List<EventEntity>> = repository.allEvents
 
-    //val emptyData: LiveData<Boolean> = Transformations.map(allEvents) { it.isEmpty() }
-
     private val eventEntityEditor = EventEntityEditor()
+
+    private var newEventMode = true
+
+    init {
+        eventId?.let {
+            val currentEvent = allEvents.value?.singleOrNull { eventEntity -> eventEntity.id == it }
+            currentEvent?.let {
+                eventEntityEditor.currentEventEntity = currentEvent
+                newEventMode = false
+            }
+        }
+    }
 
     private val _saveProgress = MutableLiveData<LiveDataEvent<OperationProgressState>>()
     val saveProgress: LiveData<LiveDataEvent<OperationProgressState>>
@@ -30,6 +38,7 @@ class EditEventViewModel(private val repository: EventsRepository, private val e
     val currentEventDate: LiveData<Long?>
         get() = _currentEventDate
 
+    //todo use update for edit mode
     private fun insertEvent(event: EventEntity) {
         viewModelScope.launch {
             try {

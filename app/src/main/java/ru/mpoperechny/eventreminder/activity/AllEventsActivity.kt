@@ -64,8 +64,8 @@ class AllEventsActivity : AppCompatActivity() {
 
     private fun editEvent(pos: Int) {
         val intent = Intent(this@AllEventsActivity, EditEventActivity::class.java)
-        eventsViewModel.allEvents.value?.get(pos)?.id?.let {
-            intent.putExtra("eventId", it)
+        eventsViewModel.allEvents.value?.get(pos)?.id.let {
+            intent.putExtra(EditEventActivity.EVENT_ID, it)
         }
         startActivity(intent)
     }

@@ -8,7 +8,7 @@ class EditEventViewModelFactory(private val repository: EventsRepository, privat
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return EditEventViewModel(repository) as T
+        return EditEventViewModel(repository, eventId) as T
     }
 
 }

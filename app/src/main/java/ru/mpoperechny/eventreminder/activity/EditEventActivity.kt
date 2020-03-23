@@ -21,9 +21,14 @@ class EditEventActivity : AppCompatActivity() {
 
     //todo горизонтальная ориентация
 
+    companion object {
+        const val EVENT_ID = "event_id"
+    }
+
+    private var eventId: Int? = null
 
     private val viewModel: EditEventViewModel by viewModels {
-        provideEditEventViewModelFactory(application, 345)
+        provideEditEventViewModelFactory(application, eventId)
     }
     private val binding: ActivityEditEventBinding by lazy {
         DataBindingUtil.setContentView<ActivityEditEventBinding>(this, R.layout.activity_edit_event)
@@ -32,8 +37,7 @@ class EditEventActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        println("extra ${intent?.getIntExtra("eventId", 100)}")
-        println("savedInstanceState ${savedInstanceState}")
+        intent?.let { if (it.hasExtra(EVENT_ID)) eventId = it.extras?.getInt(EVENT_ID) }
 
         supportActionBar?.title = getString(R.string.new_event_page_toolbar_title)
 
@@ -41,7 +45,8 @@ class EditEventActivity : AppCompatActivity() {
 
         viewModel.saveProgress.observe(this, saveStateObserver)
         viewModel.currentEventDate.observe(this) {
-            binding.tvDayPicker.text = if (it != null) timeToDateString(it) else getString(R.string.select_date)
+            binding.tvDayPicker.text =
+                if (it != null) timeToDateString(it) else getString(R.string.select_date)
         }
 
         binding.btSaveEvent.setOnClickListener {
