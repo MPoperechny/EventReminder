@@ -13,17 +13,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/list_item_margin_left"
-        android:layout_marginLeft="@dimen/list_item_margin_left"
-        android:layout_marginTop="@dimen/list_item_margin_top"
         android:layout_marginEnd="@dimen/list_item_margin_right"
-        android:layout_marginRight="@dimen/list_item_margin_right"
+        android:layout_marginBottom="@dimen/margin_small"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tv_recycler_item"
+            android:id="@+id/tvMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{description.mainTitle + '\n' + description.dateString}"/>
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:text="@{description.mainTitle}"/>
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="@{description.dateString}"/>
 
     </LinearLayout>
 </layout>

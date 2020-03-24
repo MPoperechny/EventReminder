@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">EventReminder</string>
 
-    <string name="next_events_page_toolbar_title">События</string>
+    <string name="next_events_page_toolbar_title">Ближайшие события</string>
     <string name="all_events_page_toolbar_title">Все события</string>
 
     <string name="next_events_title">Последующие:</string>
