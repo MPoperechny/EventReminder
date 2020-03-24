@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
     <application
+        android:name=".EventReminderApp"
         android:allowBackup="true"
         android:icon="@drawable/calendar_icon"
         android:label="@string/app_name"

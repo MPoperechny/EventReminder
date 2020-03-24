@@ -27,7 +27,7 @@ object AlarmUtils {
         //manager.setExactAndAllowWhileIdle(android.app.AlarmManager.RTC_WAKEUP, calendar2.getTimeInMillis(), pendingIntent2);
         manager.setAlarmClock(
             //AlarmClockInfo(calendar.timeInMillis + AlarmManager.INTERVAL_DAY, pendingIntent),
-            AlarmClockInfo(calendar.timeInMillis + 20 * 1000, pendingIntent),
+            AlarmClockInfo(calendar.timeInMillis + 30 * 1000, pendingIntent),
             pendingIntent
         )
         println("alarm enabled ${Date().getHours()}:${Date().getMinutes()}")

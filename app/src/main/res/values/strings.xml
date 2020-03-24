@@ -35,6 +35,8 @@
     <string name="event_type_title">Тип события:</string>
     <string name="delete_all_button_text">Удалить все</string>
     <string name="delete_all">Удалить все записи</string>
+    <string name="notification_channel_description">App notification channel</string>
+    <string name="notification_channel_name">Notification channel name</string>
 
 
     <string-array name="spinner_event_types_array">
