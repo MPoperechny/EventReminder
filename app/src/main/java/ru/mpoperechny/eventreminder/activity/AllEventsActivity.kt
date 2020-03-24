@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.DividerItemDecoration
 import ru.mpoperechny.eventreminder.R
 import ru.mpoperechny.eventreminder.adapters.EventsListAdapter
 import ru.mpoperechny.eventreminder.databinding.ActivityAllEventsBinding
@@ -40,6 +41,10 @@ class AllEventsActivity : AppCompatActivity() {
         allEventsAdapter.onItemClick = clickListener
         binding.adapter = allEventsAdapter
 
+        val mDividerItemDecoration =
+            DividerItemDecoration(binding.rvEventsList.context, DividerItemDecoration.VERTICAL)
+        binding.rvEventsList.addItemDecoration(mDividerItemDecoration)
+
         eventsViewModel.allEvents.observe(this) { it.let(allEventsAdapter::updateList) }
 
         binding.btAddEvent.setOnClickListener {
@@ -69,7 +74,7 @@ class AllEventsActivity : AppCompatActivity() {
                 "${getString(R.string.select_action_for)} $eventDesc"
             )
             builder.setPositiveButton(R.string.delete) { _, _ -> confirmDelete(pos) }
-            builder.setNegativeButton(R.string.edit, {_, _ -> editEvent(pos)})
+            builder.setNegativeButton(R.string.edit, { _, _ -> editEvent(pos) })
             builder.setNeutralButton(android.R.string.no, null)
             builder.show()
         }

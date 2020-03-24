@@ -9,21 +9,52 @@
             type="ru.mpoperechny.eventreminder.TextEventDescription" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/list_item_margin_left"
-        android:layout_marginLeft="@dimen/list_item_margin_left"
-        android:layout_marginTop="@dimen/list_item_margin_top"
-        android:layout_marginEnd="@dimen/list_item_margin_right"
-        android:layout_marginRight="@dimen/list_item_margin_right"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_recycler_item"
+        <ImageView
+            android:id="@+id/pict"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="@dimen/margin_mid"
+            android:layout_centerVertical="true"
+            android:src="@drawable/calendar_icon"
+            android:visibility="visible"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{description.fullDescriptionText}"/>
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_toEndOf="@id/pict"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@android:color/holo_blue_dark"
+                android:text="@{description.mainTitle}" />
+
+            <TextView
+                android:id="@+id/tvType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text="@{description.eventType}" />
+
+            <TextView
+                android:id="@+id/tvAdditional"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:text="@{description.dateString}" />
+
+        </LinearLayout>
+    </RelativeLayout>
 </layout>

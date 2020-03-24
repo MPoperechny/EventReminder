@@ -23,7 +23,7 @@
             android:id="@+id/tv_recycler_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{description.shortDescriptionText}"/>
+            android:text="@{description.mainTitle + '\n' + description.dateString}"/>
 
     </LinearLayout>
 </layout>

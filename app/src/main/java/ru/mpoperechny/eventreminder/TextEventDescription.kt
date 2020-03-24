@@ -9,17 +9,21 @@ import java.util.*
 
 class TextEventDescription(val context: Context, event: EventEntity) {
 
-    val person: String = event.person ?: ""
+    val dateString: String = timeToDateString(event.date)
 
-    private val dateString: String = timeToDateString(event.date)
+    val eventType = eventTypeString(event.type)
 
-    val fullDescriptionText: String =
-        "${event.person}\n${eventTypeString(event.type)} ${dateString}"
+    val mainTitle = mainTitleString(event)
 
-    val shortDescriptionText: String =
-        "${event.person}\n ${dateString}"
-
-    val daysLeftMessage = daysLeftString(context, event.daysLeft)
+    private fun mainTitleString(event: EventEntity): String {
+        val lineBreak = if (event.person != null && event.description != null) "\n" else ""
+        return when (event.type) {
+            EventEntity.BIRTHDAY -> "${event.person}$lineBreak${event.description ?: ""}"
+            EventEntity.HOLIDAY -> "${event.description}$lineBreak${event.person ?: ""}"
+            EventEntity.OTHER -> "${event.description ?: ""}$lineBreak${event.person ?: ""}"
+            else -> "${event.description ?: ""}$lineBreak${event.person ?: ""}"
+        }
+    }
 
     private fun eventTypeString(eventType: Int): String {
         return when (eventType) {
@@ -29,4 +33,15 @@ class TextEventDescription(val context: Context, event: EventEntity) {
             else -> context.getString(R.string.other_event)
         }
     }
+
+    /*
+    val person: String = event.person ?: ""
+
+    val fullDescriptionText: String =
+        "${event.person}\n${eventTypeString(event.type)} $dateString"
+
+    val shortDescriptionText: String = "${event.person}\n $dateString"
+
+    val daysLeftMessage = daysLeftString(context, event.daysLeft)
+     */
 }
