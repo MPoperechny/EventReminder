@@ -3,6 +3,7 @@ package ru.mpoperechny.eventreminder.activity
 import android.app.DatePickerDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -51,6 +52,8 @@ class EditEventActivity : AppCompatActivity() {
             }
         }
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         viewModel.saveProgress.observe(this, saveStateObserver)
 
         binding.btSaveEvent.setOnClickListener {
@@ -76,6 +79,16 @@ class EditEventActivity : AppCompatActivity() {
             )
             datePickerDialog.show()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun sendData(time: Long? = null) {

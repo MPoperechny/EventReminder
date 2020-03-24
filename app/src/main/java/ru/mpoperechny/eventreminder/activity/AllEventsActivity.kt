@@ -2,6 +2,7 @@ package ru.mpoperechny.eventreminder.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +34,8 @@ class AllEventsActivity : AppCompatActivity() {
 
         supportActionBar?.title = getString(R.string.all_events_page_toolbar_title)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         binding.lifecycleOwner = this
 
         //binding.viewModel = eventsViewModel
@@ -63,6 +66,15 @@ class AllEventsActivity : AppCompatActivity() {
         }
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     private val clickListener: ((position: Int, type: Int) -> Unit)? =
         { pos, _ ->
