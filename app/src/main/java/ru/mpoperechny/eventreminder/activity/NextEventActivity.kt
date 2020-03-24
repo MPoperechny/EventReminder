@@ -8,6 +8,8 @@ import androidx.databinding.DataBindingUtil
 import ru.mpoperechny.eventreminder.R
 import ru.mpoperechny.eventreminder.adapters.EventsListAdapter
 import ru.mpoperechny.eventreminder.databinding.ActivityNextEventBinding
+import ru.mpoperechny.eventreminder.notification.AlarmUtils
+import ru.mpoperechny.eventreminder.utilites.LocalSettings
 import ru.mpoperechny.eventreminder.utilites.FactoryProvider.provideEventsViewModelFactory
 import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
 
@@ -35,6 +37,10 @@ class NextEventActivity : AppCompatActivity() {
         binding.btAllEvents.setOnClickListener {
             startActivity(Intent(this@NextEventActivity, AllEventsActivity::class.java))
         }
+
+        //todo move to app class
+        LocalSettings.setAlarmEnabled(this,  true)
+        AlarmUtils.setAlarm(this);
     }
 
 }
