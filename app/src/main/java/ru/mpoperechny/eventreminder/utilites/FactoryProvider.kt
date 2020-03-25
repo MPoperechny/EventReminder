@@ -8,7 +8,7 @@ import ru.mpoperechny.eventreminder.viewmodel.EventsViewModelFactory
 
 object FactoryProvider {
 
-    private fun getEventsRepository(application: Application): EventsRepository {
+    fun getEventsRepository(application: Application): EventsRepository {
         return EventsRepository.getInstance(application)
     }
 
