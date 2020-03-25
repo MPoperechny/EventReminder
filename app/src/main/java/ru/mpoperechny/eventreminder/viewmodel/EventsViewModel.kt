@@ -31,8 +31,8 @@ class EventsViewModel(private val repository: EventsRepository) : ViewModel() {
 
     private fun filterList(list: List<EventEntity>, includeDate: Boolean): List<EventEntity> {
         return if (list.isNotEmpty()) {
-            val nearestEventDay = list[0].date
-            if (includeDate) list.filter { it.date == nearestEventDay } else list.filter { it.date != nearestEventDay }
+            val minDaysLeft = list[0].daysLeft
+            if (includeDate) list.filter { it.daysLeft == minDaysLeft } else list.filter { it.daysLeft != minDaysLeft }
         } else {
             list
         }

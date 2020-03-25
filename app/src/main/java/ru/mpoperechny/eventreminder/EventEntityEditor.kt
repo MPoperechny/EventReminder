@@ -18,8 +18,9 @@ class EventEntityEditor {
                 2 -> currentEventEntity.type = EventEntity.OTHER
             }
         }
-        if (!personNameInput.isNullOrBlank()) currentEventEntity.person = personNameInput
-        if (!descriptionInput.isNullOrBlank()) currentEventEntity.description = descriptionInput
+
+        currentEventEntity.person = if(personNameInput.isNullOrBlank()) null else personNameInput
+        currentEventEntity.description = if(descriptionInput.isNullOrBlank()) null else descriptionInput
     }
 
 }

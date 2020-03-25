@@ -37,6 +37,7 @@
     <string name="delete_all">Удалить все записи</string>
     <string name="notification_channel_description">App notification channel</string>
     <string name="notification_channel_name">Notification channel name</string>
+    <string name="notification_several_events_title">Ближайшие события</string>
 
 
     <string-array name="spinner_event_types_array">

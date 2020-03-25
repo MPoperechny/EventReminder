@@ -4,29 +4,40 @@ import android.content.Context
 import ru.mpoperechny.eventreminder.database.EventEntity
 import ru.mpoperechny.eventreminder.utilites.daysLeftString
 import ru.mpoperechny.eventreminder.utilites.timeToDateString
-import java.text.SimpleDateFormat
-import java.util.*
 
-class TextEventDescription(val context: Context, event: EventEntity) {
+class TextEventDescription(val context: Context, val event: EventEntity) {
 
     val dateString: String = timeToDateString(event.date)
 
-    val eventType = eventTypeString(event.type)
+    val eventType = eventTypeString()
 
-    val mainTitle = mainTitleString(event)
+    val mainTitle = mainTitleString()
 
-    private fun mainTitleString(event: EventEntity): String {
-        val lineBreak = if (event.person != null && event.description != null) "\n" else ""
+    val daysLeftMessage = daysLeftString(context, event.daysLeft)
+
+    val notificationMainTitle: String
+        get() = notificationMainString()
+
+    private fun notificationMainString(): String {
+        val separator = if (event.person != null && event.description != null) " " else ""
         return when (event.type) {
-            EventEntity.BIRTHDAY -> "${event.person}$lineBreak${event.description ?: ""}"
-            EventEntity.HOLIDAY -> "${event.description}$lineBreak${event.person ?: ""}"
-            EventEntity.OTHER -> "${event.description ?: ""}$lineBreak${event.person ?: ""}"
-            else -> "${event.description ?: ""}$lineBreak${event.person ?: ""}"
+            EventEntity.BIRTHDAY -> "$eventType ${event.person}"
+            else -> "${event.description ?: ""}$separator${event.person ?: ""}"
         }
     }
 
-    private fun eventTypeString(eventType: Int): String {
-        return when (eventType) {
+    private fun mainTitleString(): String {
+        val possibleLineBreak = if (event.person != null && event.description != null) "\n" else ""
+        return when (event.type) {
+            EventEntity.BIRTHDAY -> "${event.person}$possibleLineBreak${event.description ?: ""}"
+            EventEntity.HOLIDAY -> "${event.description}$possibleLineBreak${event.person ?: ""}"
+            EventEntity.OTHER -> "${event.description ?: ""}$possibleLineBreak${event.person ?: ""}"
+            else -> "${event.description ?: ""}$possibleLineBreak${event.person ?: ""}"
+        }
+    }
+
+    private fun eventTypeString(): String {
+        return when (event.type) {
             EventEntity.BIRTHDAY -> context.getString(R.string.birthday)
             EventEntity.HOLIDAY -> context.getString(R.string.holiday)
             EventEntity.OTHER -> context.getString(R.string.other_event)
@@ -42,6 +53,6 @@ class TextEventDescription(val context: Context, event: EventEntity) {
 
     val shortDescriptionText: String = "${event.person}\n $dateString"
 
-    val daysLeftMessage = daysLeftString(context, event.daysLeft)
+
      */
 }
