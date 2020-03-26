@@ -19,7 +19,6 @@ import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
 
 class AllEventsActivity : AppCompatActivity() {
 
-    //todo сортировать список
 
     private val eventsViewModel: EventsViewModel by viewModels {
         provideEventsViewModelFactory(application)
@@ -48,7 +47,7 @@ class AllEventsActivity : AppCompatActivity() {
             DividerItemDecoration(binding.rvEventsList.context, DividerItemDecoration.VERTICAL)
         binding.rvEventsList.addItemDecoration(mDividerItemDecoration)
 
-        eventsViewModel.allEvents.observe(this) { it.let(allEventsAdapter::updateList) }
+        eventsViewModel.allEventsSortedByDayOfYear.observe(this) { it.let(allEventsAdapter::updateList) }
 
         binding.btAddEvent.setOnClickListener {
             val intent = Intent(this@AllEventsActivity, EditEventActivity::class.java)

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.mpoperechny.eventreminder.database.EventEntity
 import ru.mpoperechny.eventreminder.repository.EventsRepository
+import java.util.*
 
 class EventsViewModel(private val repository: EventsRepository) : ViewModel() {
 
@@ -37,6 +38,14 @@ class EventsViewModel(private val repository: EventsRepository) : ViewModel() {
             list
         }
     }
+
+    val allEventsSortedByDayOfYear: LiveData<List<EventEntity>> =
+        Transformations.map(allEvents) { eventEntities ->
+            val calendar = Calendar.getInstance()
+            eventEntities.sortedBy {
+                calendar.timeInMillis = it.date
+                calendar.get(Calendar.DAY_OF_YEAR) }
+        }
 
     val nearestEventDay: LiveData<Long> = Transformations.map(sortedAllEvents) {
         if (it.isNotEmpty()) it[0].date else 0
