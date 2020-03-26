@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.RingtoneManager
@@ -61,7 +62,8 @@ object NotificationUtils {
             PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_ONE_SHOT)
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.calendar_icon)
+            .setSmallIcon(android.R.drawable.ic_popup_reminder)
+            .setLargeIcon(BitmapFactory.decodeResource(context.resources, R.drawable.calendar_icon))
             .setContentTitle(title)
             .setContentText(text)
             .setDefaults(Notification.DEFAULT_ALL)
