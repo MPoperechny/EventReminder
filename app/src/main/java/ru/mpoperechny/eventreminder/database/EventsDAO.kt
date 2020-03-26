@@ -1,10 +1,7 @@
 package ru.mpoperechny.eventreminder.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 import androidx.room.OnConflictStrategy.REPLACE
 
@@ -15,8 +12,14 @@ interface EventsDAO {
     @get:Query("SELECT * FROM events")
     val allEvents: LiveData<List<EventEntity>>
 
+    @Query("SELECT * FROM events")
+    suspend fun getAll(): List<EventEntity>
+
     @Insert(onConflict = REPLACE)
     suspend fun insertEvent(event: EventEntity)
+
+    @Update
+    fun updateEvent(event: EventEntity)
 
     @Insert(onConflict = REPLACE)
     suspend fun insertEvents(vararg events: EventEntity)

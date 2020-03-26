@@ -17,6 +17,9 @@ class EventsRepository private constructor(application: Application) {
         println("EventsRepository init ${this}")
     }
 
+    suspend fun getAllEvents(): List<EventEntity> {
+        return eventsDAO.getAll()
+    }
 
     suspend fun insertEvent(event: EventEntity) {
         eventsDAO.insertEvent(event)
