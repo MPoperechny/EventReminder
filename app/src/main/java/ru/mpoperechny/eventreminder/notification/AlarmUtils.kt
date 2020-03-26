@@ -5,6 +5,7 @@ import android.app.AlarmManager.AlarmClockInfo
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -12,28 +13,39 @@ object AlarmUtils {
 
     private const val INTENT_REQUEST_CODE = 0
 
-    fun setAlarm(context: Context) {
+    fun setNotificationsAlarm(context: Context) {
+
+        //println("setNotificationsAlarm")
 
         val calendar = Calendar.getInstance()
-        //calendar.set(Calendar.HOUR_OF_DAY, 11)
-        //calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.HOUR_OF_DAY, 11)
+        calendar.set(Calendar.MINUTE, 0)
+
+        val now = Calendar.getInstance().timeInMillis
+        with(calendar) {if (now >= timeInMillis) add(Calendar.HOUR_OF_DAY, 24)}
 
         val manager =
             context.applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val pendingIntent = getPendingIntent(context)
 
-        //manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_HALF_HOUR, pendingIntent);
-        //manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar2.getTimeInMillis(), 1000*60*60*4, pendingIntent2);
-        //manager.setExactAndAllowWhileIdle(android.app.AlarmManager.RTC_WAKEUP, calendar2.getTimeInMillis(), pendingIntent2);
-        manager.setAlarmClock(
-            //AlarmClockInfo(calendar.timeInMillis + AlarmManager.INTERVAL_DAY, pendingIntent),
-            AlarmClockInfo(calendar.timeInMillis + 30 * 1000, pendingIntent),
-            pendingIntent
+        manager.setRepeating(
+            AlarmManager.RTC_WAKEUP, calendar.timeInMillis, AlarmManager.INTERVAL_DAY, pendingIntent
         )
-        println("alarm enabled ${Date().getHours()}:${Date().getMinutes()}")
+
+
+        //1 minute interval
+        /*
+        manager.cancel(pendingIntent)
+        val testCalendar = Calendar.getInstance()
+        testCalendar.set(Calendar.SECOND, 30)
+        if (Calendar.getInstance().timeInMillis >= testCalendar.timeInMillis) {
+            testCalendar.add(Calendar.MINUTE, 1)
+        }
+        manager.setRepeating(AlarmManager.RTC_WAKEUP, testCalendar.timeInMillis, 60*1000, pendingIntent)
+        */
     }
 
-    fun disableAlarm(context: Context) {
+    fun disableNotificationsAlarm(context: Context) {
         val manager =
             context.applicationContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val pendingIntent = getPendingIntent(context)

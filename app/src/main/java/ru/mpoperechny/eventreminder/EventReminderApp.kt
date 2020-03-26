@@ -10,12 +10,16 @@ class EventReminderApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        println("app!!!")
-        //todo сделать чтобы в день запуска срабатывало уведомление
-        //todo проверить на разеых версиях
-        LocalSettings.setAlarmEnabled(this, true)
-        AlarmUtils.setAlarm(this)
         NotificationUtils.createNotificationChannel(this)
-    }
 
+        println("Application onCreate")
+
+        //todo вынести в пользовательские настройки
+        LocalSettings.setNotificationsEnabled(this, true)
+        AlarmUtils.setNotificationsAlarm(this)
+
+        //LocalSettings.setNotificationsEnabled(this, false)
+        //AlarmUtils.disableNotificationsAlarm(this)
+
+    }
 }

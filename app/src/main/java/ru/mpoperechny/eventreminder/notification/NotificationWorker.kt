@@ -14,13 +14,9 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters) :
 
     override fun doWork(): Result {
 
-        println("NotificationWorker doWork")
-
         val application = applicationContext as Application
         val repository = FactoryProvider.getEventsRepository(application)
         val allEvents = runBlocking { repository.getAllEvents() }
-
-        println("allEvents $allEvents")
 
         /*
         если событие одно:
@@ -43,8 +39,6 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters) :
             .sortedBy { it.daysLeft }
 
 
-        println("!nearest.isNullOrEmpty() ${!nearest.isNullOrEmpty()}")
-
         if (!nearest.isNullOrEmpty()) {
             if (nearest.size == 1) {
                 val textDescription = TextEventDescription(application, nearest[0])
@@ -60,6 +54,8 @@ class NotificationWorker(appContext: Context, workerParams: WorkerParameters) :
             }
 
             NotificationUtils.sendNotification(application, title, text, expandedText)
+
+            println("send notification")
         }
 
         //TimeUnit.SECONDS.sleep(5);
