@@ -53,68 +53,10 @@ abstract class EventsDatabase : RoomDatabase() {
                 INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
                         database.eventsDao.deleteAll()
-                        database.eventsDao.insertEvents(*EventsDatabase.defaultData)
+                        database.eventsDao.insertEvents(*DefaultData.getDefaultData())
                     }
                 }
             }
         }
-
-        internal val defaultData: Array<EventEntity>
-            get() = arrayOf(
-
-                EventEntity(
-                    GregorianCalendar(1965, Calendar.FEBRUARY, 18).timeInMillis,
-                    EventEntity.BIRTHDAY,
-                    "Иванов Иван Иванович",
-                    "описание1"
-                ),
-                EventEntity(
-                    GregorianCalendar(1965, Calendar.FEBRUARY, 18).timeInMillis,
-                    EventEntity.BIRTHDAY,
-                    "Иванов Иван Иванович",
-                    "описание1"
-                ),
-                EventEntity(
-                    GregorianCalendar(1965, Calendar.FEBRUARY, 18).timeInMillis,
-                    EventEntity.BIRTHDAY,
-                    "Иванов Иван Иванович",
-                    "описание1"
-                ),
-                EventEntity(
-                    GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
-                    EventEntity.BIRTHDAY,
-                    "Петров Петр Петрович",
-                    "описание2"
-                )
-                ,
-                EventEntity(
-                    GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
-                    EventEntity.BIRTHDAY,
-                    "Петров Петр Петрович",
-                    "описание2"
-                )
-                ,
-                EventEntity(
-                    GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
-                    EventEntity.BIRTHDAY,
-                    "Петров Петр Петрович",
-                    "описание2"
-                )
-                ,
-                EventEntity(
-                    GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
-                    EventEntity.BIRTHDAY,
-                    "Петров Петр Петрович",
-                    "описание2"
-                )
-                ,
-                EventEntity(
-                    GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
-                    EventEntity.BIRTHDAY,
-                    "Петров Петр Петрович",
-                    "описание2"
-                )
-
-            )
     }
 }
