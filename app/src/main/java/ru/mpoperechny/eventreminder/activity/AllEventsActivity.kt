@@ -78,7 +78,7 @@ class AllEventsActivity : AppCompatActivity() {
     private val clickListener: ((position: Int, type: Int) -> Unit)? =
         { pos, _ ->
             val eventDesc =
-                eventsViewModel.allEvents.value?.get(pos)?.date?.let { timeToDateString(it) }
+                eventsViewModel.allEventsSortedByDayOfYear.value?.get(pos)?.date?.let { timeToDateString(it) }
 
             val builder = AlertDialog.Builder(this)
             builder.setMessage(
@@ -92,7 +92,7 @@ class AllEventsActivity : AppCompatActivity() {
 
     private fun editEvent(pos: Int) {
         val intent = Intent(this@AllEventsActivity, EditEventActivity::class.java)
-        eventsViewModel.allEvents.value?.get(pos)?.id.let {
+        eventsViewModel.allEventsSortedByDayOfYear.value?.get(pos)?.id.let {
             intent.putExtra(EditEventActivity.EVENT_ID, it)
         }
         startActivity(intent)
@@ -102,7 +102,7 @@ class AllEventsActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("${getString(R.string.delete)}?")
         builder.setPositiveButton(android.R.string.yes) { _, _ ->
-            eventsViewModel.allEvents.value?.let {
+            eventsViewModel.allEventsSortedByDayOfYear.value?.let {
                 if (it.size > pos) eventsViewModel.deleteEvent(it[pos])
             }
         }
