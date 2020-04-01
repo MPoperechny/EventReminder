@@ -11,53 +11,39 @@ class DefaultData {
                     GregorianCalendar(1965, Calendar.FEBRUARY, 18).timeInMillis,
                     EventEntity.BIRTHDAY,
                     "Иванов Иван Иванович",
-                    "описание1"
+                    null
                 ),
                 EventEntity(
-                    GregorianCalendar(1965, Calendar.FEBRUARY, 18).timeInMillis,
+                    GregorianCalendar(1965, Calendar.FEBRUARY, 19).timeInMillis,
                     EventEntity.BIRTHDAY,
-                    "Иванов Иван Иванович",
-                    "описание1"
+                    "Иванов Иван Петрович",
+                    null
                 ),
                 EventEntity(
-                    GregorianCalendar(1965, Calendar.FEBRUARY, 18).timeInMillis,
+                    GregorianCalendar(1965, Calendar.FEBRUARY, 20).timeInMillis,
                     EventEntity.BIRTHDAY,
-                    "Иванов Иван Иванович",
-                    "описание1"
+                    "Иванов Иван Сидорович",
+                    null
                 ),
                 EventEntity(
                     GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
                     EventEntity.BIRTHDAY,
                     "Петров Петр Петрович",
-                    "описание2"
+                    null
                 )
                 ,
                 EventEntity(
-                    GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
+                    GregorianCalendar(1970, Calendar.MARCH, 2).timeInMillis,
                     EventEntity.BIRTHDAY,
-                    "Петров Петр Петрович",
-                    "описание2"
+                    "Петров Петр Иванович",
+                    null
                 )
                 ,
                 EventEntity(
-                    GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
+                    GregorianCalendar(1970, Calendar.MARCH, 3).timeInMillis,
                     EventEntity.BIRTHDAY,
-                    "Петров Петр Петрович",
-                    "описание2"
-                )
-                ,
-                EventEntity(
-                    GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
-                    EventEntity.BIRTHDAY,
-                    "Петров Петр Петрович",
-                    "описание2"
-                )
-                ,
-                EventEntity(
-                    GregorianCalendar(1970, Calendar.MARCH, 1).timeInMillis,
-                    EventEntity.BIRTHDAY,
-                    "Петров Петр Петрович",
-                    "описание2"
+                    "Петров Петр Сидорович",
+                    null
                 )
             )
         }
