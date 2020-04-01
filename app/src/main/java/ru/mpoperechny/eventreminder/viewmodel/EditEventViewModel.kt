@@ -60,7 +60,7 @@ class EditEventViewModel(
         get() = _saveProgress
 
 
-    //todo use update/replace for edit mode
+    //todo use update for edit mode
     private fun insertEvent(event: EventEntity) {
         viewModelScope.launch {
             try {

@@ -22,8 +22,6 @@ import java.util.*
 
 class EditEventActivity : AppCompatActivity() {
 
-    //todo горизонтальная ориентация
-
     companion object {
         const val EVENT_ID = "event_id"
     }

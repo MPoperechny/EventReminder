@@ -48,8 +48,6 @@ object NotificationUtils {
 
     }
 
-    //todo доступ к звуку и всплывающим уведомлениям по умолчанию
-
     fun sendNotification(
         context: Context,
         title: String,

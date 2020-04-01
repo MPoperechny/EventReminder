@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="ru.mpoperechny.eventreminder">
+    package="ru.mpoperechny.eventreminder"
+    tools:ignore="LockedOrientationActivity">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.QUICKBOOT_POWERON" />
@@ -17,9 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.EditEventActivity"/>
-        <activity android:name=".activity.AllEventsActivity" />
-        <activity android:name=".activity.NextEventActivity">
+        <activity
+            android:name=".activity.EditEventActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.AllEventsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.NextEventActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
