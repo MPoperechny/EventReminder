@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="ru.mpoperechny.eventreminder.viewmodel.EventsViewModel" />
+            type="ru.mpoperechny.eventreminder.viewmodel.NextEventsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

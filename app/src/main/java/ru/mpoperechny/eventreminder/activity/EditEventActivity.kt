@@ -15,7 +15,7 @@ import ru.mpoperechny.eventreminder.LiveDataEvent
 import ru.mpoperechny.eventreminder.OperationProgressState
 import ru.mpoperechny.eventreminder.R
 import ru.mpoperechny.eventreminder.databinding.ActivityEditEventBinding
-import ru.mpoperechny.eventreminder.utilites.FactoryProvider.provideEditEventViewModelFactory
+import ru.mpoperechny.eventreminder.utilites.FactoryProvider.provideViewModelFactory
 import ru.mpoperechny.eventreminder.viewmodel.EditEventViewModel
 import java.util.*
 
@@ -29,7 +29,7 @@ class EditEventActivity : AppCompatActivity() {
     private var eventId: Int? = null
 
     private val viewModel: EditEventViewModel by viewModels {
-        provideEditEventViewModelFactory(application, eventId)
+        provideViewModelFactory(application, eventId)
     }
     private val binding: ActivityEditEventBinding by lazy {
         DataBindingUtil.setContentView<ActivityEditEventBinding>(this, R.layout.activity_edit_event)

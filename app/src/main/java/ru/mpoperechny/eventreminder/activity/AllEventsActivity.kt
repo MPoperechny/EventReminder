@@ -12,16 +12,16 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import ru.mpoperechny.eventreminder.R
 import ru.mpoperechny.eventreminder.adapters.EventsListAdapter
 import ru.mpoperechny.eventreminder.databinding.ActivityAllEventsBinding
-import ru.mpoperechny.eventreminder.utilites.FactoryProvider.provideEventsViewModelFactory
+import ru.mpoperechny.eventreminder.utilites.FactoryProvider.provideViewModelFactory
 import ru.mpoperechny.eventreminder.utilites.timeToDateString
-import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
+import ru.mpoperechny.eventreminder.viewmodel.AllEventsViewModel
 
 
 class AllEventsActivity : AppCompatActivity() {
 
 
-    private val eventsViewModel: EventsViewModel by viewModels {
-        provideEventsViewModelFactory(application)
+    private val viewModel: AllEventsViewModel by viewModels {
+        provideViewModelFactory(application)
     }
 
     private val binding: ActivityAllEventsBinding by lazy {
@@ -47,7 +47,7 @@ class AllEventsActivity : AppCompatActivity() {
             DividerItemDecoration(binding.rvEventsList.context, DividerItemDecoration.VERTICAL)
         binding.rvEventsList.addItemDecoration(mDividerItemDecoration)
 
-        eventsViewModel.allEventsSortedByDayOfYear.observe(this) { it.let(allEventsAdapter::updateList) }
+        viewModel.allEventsSortedByDayOfYear.observe(this) { it.let(allEventsAdapter::updateList) }
 
         binding.btAddEvent.setOnClickListener {
             val intent = Intent(this@AllEventsActivity, EditEventActivity::class.java)
@@ -58,7 +58,7 @@ class AllEventsActivity : AppCompatActivity() {
             val builder = AlertDialog.Builder(this)
             builder.setMessage("${getString(R.string.delete_all)}?")
             builder.setPositiveButton(android.R.string.yes) { _, _ ->
-                eventsViewModel.deleteAll()
+                viewModel.deleteAll()
             }
             builder.setNegativeButton(android.R.string.no, null)
             builder.show()
@@ -78,7 +78,7 @@ class AllEventsActivity : AppCompatActivity() {
     private val clickListener: ((position: Int, type: Int) -> Unit)? =
         { pos, _ ->
             val eventDesc =
-                eventsViewModel.allEventsSortedByDayOfYear.value?.get(pos)?.date?.let { timeToDateString(it) }
+                viewModel.allEventsSortedByDayOfYear.value?.get(pos)?.date?.let { timeToDateString(it) }
 
             val builder = AlertDialog.Builder(this)
             builder.setMessage(
@@ -92,7 +92,7 @@ class AllEventsActivity : AppCompatActivity() {
 
     private fun editEvent(pos: Int) {
         val intent = Intent(this@AllEventsActivity, EditEventActivity::class.java)
-        eventsViewModel.allEventsSortedByDayOfYear.value?.get(pos)?.id.let {
+        viewModel.allEventsSortedByDayOfYear.value?.get(pos)?.id.let {
             intent.putExtra(EditEventActivity.EVENT_ID, it)
         }
         startActivity(intent)
@@ -102,8 +102,8 @@ class AllEventsActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("${getString(R.string.delete)}?")
         builder.setPositiveButton(android.R.string.yes) { _, _ ->
-            eventsViewModel.allEventsSortedByDayOfYear.value?.let {
-                if (it.size > pos) eventsViewModel.deleteEvent(it[pos])
+            viewModel.allEventsSortedByDayOfYear.value?.let {
+                if (it.size > pos) viewModel.deleteEvent(it[pos])
             }
         }
         builder.setNegativeButton(android.R.string.no, null)

@@ -9,11 +9,7 @@ import ru.mpoperechny.eventreminder.database.EventEntity
 import ru.mpoperechny.eventreminder.repository.EventsRepository
 import java.util.*
 
-class EventsViewModel(private val repository: EventsRepository) : ViewModel() {
-
-    internal var allEvents: LiveData<List<EventEntity>> = repository.allEvents
-
-    val emptyData: LiveData<Boolean> = Transformations.map(allEvents) { it.isEmpty() }
+class NextEventsViewModel(repository: EventsRepository) : BaseEventViewModel(repository) {
 
     private val sortedAllEvents: LiveData<List<EventEntity>> =
         Transformations.map(allEvents) { eventEntities ->
@@ -39,14 +35,6 @@ class EventsViewModel(private val repository: EventsRepository) : ViewModel() {
         }
     }
 
-    val allEventsSortedByDayOfYear: LiveData<List<EventEntity>> =
-        Transformations.map(allEvents) { eventEntities ->
-            val calendar = Calendar.getInstance()
-            eventEntities.sortedBy {
-                calendar.timeInMillis = it.date
-                calendar.get(Calendar.DAY_OF_YEAR) }
-        }
-
     val nearestEventDay: LiveData<Long> = Transformations.map(sortedAllEvents) {
         if (it.isNotEmpty()) it[0].date else 0
     }
@@ -55,21 +43,4 @@ class EventsViewModel(private val repository: EventsRepository) : ViewModel() {
         if (it.isNotEmpty()) it[0].daysLeft else 0
     }
 
-
-
-    fun insertEvent(event: EventEntity) {
-        viewModelScope.launch { repository.insertEvent(event) }
-    }
-
-    fun insertEvents(vararg events: EventEntity) {
-        viewModelScope.launch { repository.insertEvents(*events) }
-    }
-
-    fun deleteEvent(event: EventEntity) {
-        viewModelScope.launch { repository.deleteEvent(event) }
-    }
-
-    fun deleteAll() {
-        viewModelScope.launch { repository.deleteAll() }
-    }
 }

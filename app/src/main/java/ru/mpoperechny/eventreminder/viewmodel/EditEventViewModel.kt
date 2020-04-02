@@ -11,7 +11,7 @@ import ru.mpoperechny.eventreminder.repository.EventsRepository
 
 class EditEventViewModel(
     private val repository: EventsRepository,
-    private val eventId: Int? = null
+    eventId: Int? = null
 ) : ViewModel() {
 
     var currentEventEntity = EventEntity(EventEntity.Values.DATE_UNDEFINED_VALUE, 0, null, null)

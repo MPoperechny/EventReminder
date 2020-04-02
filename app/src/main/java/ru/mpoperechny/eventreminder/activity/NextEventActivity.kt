@@ -8,15 +8,15 @@ import androidx.databinding.DataBindingUtil
 import ru.mpoperechny.eventreminder.R
 import ru.mpoperechny.eventreminder.adapters.EventsListAdapter
 import ru.mpoperechny.eventreminder.databinding.ActivityNextEventBinding
-import ru.mpoperechny.eventreminder.utilites.FactoryProvider.provideEventsViewModelFactory
-import ru.mpoperechny.eventreminder.viewmodel.EventsViewModel
+import ru.mpoperechny.eventreminder.utilites.FactoryProvider.provideViewModelFactory
+import ru.mpoperechny.eventreminder.viewmodel.NextEventsViewModel
 
 
 class NextEventActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNextEventBinding
-    private val eventsViewModel: EventsViewModel by viewModels {
-        provideEventsViewModelFactory(application)
+    private val nextEventsViewModel: NextEventsViewModel by viewModels {
+        provideViewModelFactory(application)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +30,7 @@ class NextEventActivity : AppCompatActivity() {
         binding.nextEventsRecyclerView.adapter = EventsListAdapter(R.layout.card_events_list_item)
         binding.otherEventsRecyclerView.adapter = EventsListAdapter(R.layout.next_events_list_item)
 
-        binding.viewModel = eventsViewModel
+        binding.viewModel = nextEventsViewModel
 
         binding.btAllEvents.setOnClickListener {
             startActivity(Intent(this@NextEventActivity, AllEventsActivity::class.java))
