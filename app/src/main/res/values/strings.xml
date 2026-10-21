@@ -38,7 +38,13 @@
     <string name="notification_channel_description">App notification channel</string>
     <string name="notification_channel_name">Notification channel name</string>
     <string name="notification_several_events_title">Ближайшие события</string>
-
+    <string name="export_events">Экспортировать</string>
+    <string name="import_events">Импортировать</string>
+    <string name="export_success">Данные экспортированы в %1$s</string>
+    <string name="import_success">Импортировано %1$d записей</string>
+    <string name="export_error">Не удалось экспортировать данные</string>
+    <string name="import_error">Не удалось импортировать данные</string>
+    <string name="import_file_missing">Файл импорта не найден</string>
 
     <string-array name="spinner_event_types_array">
         <item>@string/birthday</item>

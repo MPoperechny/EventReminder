@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 
 import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.Transaction
 
 @Dao
 interface EventsDAO {
@@ -29,6 +30,14 @@ interface EventsDAO {
 
     @Query("DELETE FROM events")
     suspend fun deleteAll()
+
+    @Transaction
+    suspend fun replaceAll(events: List<EventEntity>) {
+        deleteAll()
+        if (events.isNotEmpty()) {
+            insertEvents(*events.toTypedArray())
+        }
+    }
 
     @Query("SELECT * FROM events WHERE id = :id LIMIT 1")
     fun getEvent(id: Int): LiveData<EventEntity>

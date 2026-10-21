@@ -37,6 +37,10 @@ class EventsRepository private constructor(application: Application) {
         eventsDAO.deleteAll()
     }
 
+    suspend fun replaceAllEvents(events: List<EventEntity>) {
+        eventsDAO.replaceAll(events)
+    }
+
     companion object {
         private var instance: EventsRepository? = null
 

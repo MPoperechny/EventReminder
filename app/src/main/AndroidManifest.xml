@@ -20,12 +20,15 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".activity.EditEventActivity"
+            android:exported="true"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.AllEventsActivity"
+            android:exported="true"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.NextEventActivity"
+            android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

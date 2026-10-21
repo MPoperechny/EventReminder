@@ -26,4 +26,8 @@ class AllEventsViewModel(repository: EventsRepository) : BaseEventViewModel(repo
     fun deleteAll() {
         viewModelScope.launch { repository.deleteAll() }
     }
+
+    fun replaceAllEvents(events: List<EventEntity>) {
+        viewModelScope.launch { repository.replaceAllEvents(events) }
+    }
 }
